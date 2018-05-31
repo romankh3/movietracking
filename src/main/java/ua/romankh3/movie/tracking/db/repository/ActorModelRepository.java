@@ -13,4 +13,6 @@ public interface ActorModelRepository extends JpaRepository<ActorModel, Integer>
     Optional<ActorModel> findById(final Integer id);
 
     ActorModel save(final ActorModel actorModel);
+
+    Optional<ActorModel> findByFirstNameAndLastName(String firstName, String lastName);
 }
