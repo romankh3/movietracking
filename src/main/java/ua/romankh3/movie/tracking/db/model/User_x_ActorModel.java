@@ -24,6 +24,38 @@ public class User_x_ActorModel {
     @Column(name = "favorite")
     private Boolean favorite;
 
+    public User_x_ActorPK getId() {
+        return id;
+    }
+
+    public void setId(User_x_ActorPK id) {
+        this.id = id;
+    }
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
+    public ActorModel getActorModel() {
+        return actorModel;
+    }
+
+    public void setActorModel(ActorModel actorModel) {
+        this.actorModel = actorModel;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
     @Override
     public boolean equals(Object obj) { return EqualsBuilder.reflectionEquals(this, obj); }
 

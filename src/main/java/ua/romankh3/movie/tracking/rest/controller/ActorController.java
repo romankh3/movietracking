@@ -4,20 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.ActorEntity;
+import ua.romankh3.movie.tracking.rest.entity.FavoriteActorEntity;
 import ua.romankh3.movie.tracking.service.ActorService;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/actor")
+@RequestMapping("/favoriteactor")
 public class ActorController {
 
     @Autowired
     private ActorService actorService;
 
-    @RequestMapping(name = "/{user_id}", method = RequestMethod.POST)
-    public Integer addFavoriteActor(@PathVariable("user_id") Integer userId,
-                                    @RequestBody @Valid ActorEntity actorEntity) throws NotFoundException {
-        return actorService.addFavoriteActor(userId, actorEntity);
+    @PostMapping
+    public Integer addFavoriteActor(@RequestBody @Valid FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+        return actorService.addFavoriteActor(favoriteActorEntity);
+    }
+
+    @PutMapping
+    public Integer removeFavoriteActor(@RequestBody @Valid FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+        return actorService.removeFavoriteActor(favoriteActorEntity);
     }
 }

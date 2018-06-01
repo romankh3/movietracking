@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.romankh3.movie.tracking.db.model.ActorModel;
 import ua.romankh3.movie.tracking.db.model.UserModel;
+import ua.romankh3.movie.tracking.db.model.User_x_ActorModel;
+import ua.romankh3.movie.tracking.db.model.User_x_ActorPK;
 import ua.romankh3.movie.tracking.db.repository.ActorModelRepository;
+import ua.romankh3.movie.tracking.db.repository.User_x_ActorRepository;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.ActorEntity;
+import ua.romankh3.movie.tracking.rest.entity.FavoriteActorEntity;
 import ua.romankh3.movie.tracking.service.ActorService;
 import ua.romankh3.movie.tracking.service.UserService;
 
@@ -21,8 +25,10 @@ public class ActorServiceImpl implements ActorService {
     private ActorModelRepository actorModelRepository;
 
     @Autowired
-    private UserService userService;
+    private User_x_ActorRepository user_x_actorRepository;
 
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<ActorEntity> findAll() {
@@ -33,13 +39,35 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Integer addFavoriteActor(Integer userId, ActorEntity actorEntity) throws NotFoundException {
-        UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(userId);
-        Optional<ActorModel> actorModelOptional = actorModelRepository.findByFirstNameAndLastName(actorEntity.getFirstName(),
-                                                                                                  actorEntity.getLastName());
-        ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(actorEntity));
-        // todo implement logic for adding favorite actor to User_x_Actor.
+    public Integer addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+        UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(favoriteActorEntity.getUser_id());
+        Optional<ActorModel> actorModelOptional = actorModelRepository.findByFirstNameAndLastName(favoriteActorEntity.getFirstName(),
+                                                                                                  favoriteActorEntity.getLastName());
+        ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(favoriteActorEntity));
+        user_x_actorRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
         return actorModel.getId();
+    }
+
+    @Override
+    public Integer removeFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+        UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(favoriteActorEntity.getUser_id());
+        Optional<ActorModel> actorModelOptional = actorModelRepository.findByFirstNameAndLastName(favoriteActorEntity.getFirstName(),
+                                                                                                  favoriteActorEntity.getLastName());
+        if(!actorModelOptional.isPresent()) {
+            return 0;
+        }
+        user_x_actorRepository.save(fillUser_x_Actor(userModel.getId(), actorModelOptional.get().getId(), false));
+        return actorModelOptional.get().getId();
+    }
+
+    private User_x_ActorModel fillUser_x_Actor(Integer userId, Integer actorId, boolean favorite) {
+        User_x_ActorPK pk = new User_x_ActorPK();
+        pk.setActor_id(actorId);
+        pk.setUser_id(userId);
+        User_x_ActorModel user_x_actorModel = new User_x_ActorModel();
+        user_x_actorModel.setId(pk);
+        user_x_actorModel.setFavorite(favorite);
+        return user_x_actorModel;
     }
 
     @Override
