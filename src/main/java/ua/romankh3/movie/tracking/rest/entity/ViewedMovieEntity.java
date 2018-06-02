@@ -3,10 +3,10 @@ package ua.romankh3.movie.tracking.rest.entity;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 
-public class FavoriteActorEntity  extends ActorEntity {
+public class ViewedMovieEntity extends MovieEntity {
 
-    @XmlElement
     @NotNull
+    @XmlElement
     private Integer user_id;
 
     public Integer getUser_id() {

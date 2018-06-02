@@ -6,7 +6,7 @@ import ua.romankh3.movie.tracking.db.model.UserModel;
 import ua.romankh3.movie.tracking.exception.AlreadyExistException;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.UserEntity;
-import ua.romankh3.movie.tracking.db.repository.UserRepository;
+import ua.romankh3.movie.tracking.db.repository.UserModelRepository;
 import ua.romankh3.movie.tracking.service.UserService;
 import ua.romankh3.movie.tracking.service.ValidationService;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserModelRepository userModelRepository;
 
     @Autowired
     private ValidationService validationService;
@@ -26,24 +26,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel createUser(UserEntity userEntity) throws AlreadyExistException {
         validationService.validateUser(userEntity);
-        return userRepository.save(toUserModel(userEntity));
+        return userModelRepository.save(toUserModel(userEntity));
     }
 
     @Override
     public List<UserEntity> findAll() {
-        return userRepository.findAll().stream()
+        return userModelRepository.findAll().stream()
                 .map(this::toUserEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserEntity delete(Integer id) {
-        return toUserEntity(userRepository.deleteById(id));
+        return toUserEntity(userModelRepository.deleteById(id));
     }
 
     @Override
     public UserModel retrieveUserByIdAndShouldNotBeNull(Integer id) throws NotFoundException {
-        Optional<UserModel> userOptional = userRepository.findById(id);
+        Optional<UserModel> userOptional = userModelRepository.findById(id);
         if(userOptional.isPresent()) {
             return userOptional.get();
         } else {

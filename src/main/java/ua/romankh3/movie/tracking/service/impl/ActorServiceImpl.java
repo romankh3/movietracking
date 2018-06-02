@@ -7,7 +7,7 @@ import ua.romankh3.movie.tracking.db.model.UserModel;
 import ua.romankh3.movie.tracking.db.model.User_x_ActorModel;
 import ua.romankh3.movie.tracking.db.model.User_x_ActorPK;
 import ua.romankh3.movie.tracking.db.repository.ActorModelRepository;
-import ua.romankh3.movie.tracking.db.repository.User_x_ActorRepository;
+import ua.romankh3.movie.tracking.db.repository.User_x_ActorModelRepository;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.ActorEntity;
 import ua.romankh3.movie.tracking.rest.entity.FavoriteActorEntity;
@@ -25,7 +25,7 @@ public class ActorServiceImpl implements ActorService {
     private ActorModelRepository actorModelRepository;
 
     @Autowired
-    private User_x_ActorRepository user_x_actorRepository;
+    private User_x_ActorModelRepository user_x_actorModelRepository;
 
     @Autowired
     private UserService userService;
@@ -44,7 +44,9 @@ public class ActorServiceImpl implements ActorService {
         Optional<ActorModel> actorModelOptional = actorModelRepository.findByFirstNameAndLastName(favoriteActorEntity.getFirstName(),
                                                                                                   favoriteActorEntity.getLastName());
         ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(favoriteActorEntity));
-        user_x_actorRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
+        user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
+        List<User_x_ActorModel> all = user_x_actorModelRepository.findAll();
+        System.out.println(all);
         return actorModel.getId();
     }
 
@@ -56,7 +58,9 @@ public class ActorServiceImpl implements ActorService {
         if(!actorModelOptional.isPresent()) {
             return 0;
         }
-        user_x_actorRepository.save(fillUser_x_Actor(userModel.getId(), actorModelOptional.get().getId(), false));
+        user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModelOptional.get().getId(), false));
+        List<User_x_ActorModel> all = user_x_actorModelRepository.findAll();
+        System.out.println(all);
         return actorModelOptional.get().getId();
     }
 

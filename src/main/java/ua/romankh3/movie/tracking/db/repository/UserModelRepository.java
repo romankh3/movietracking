@@ -6,7 +6,7 @@ import ua.romankh3.movie.tracking.db.model.UserModel;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends Repository<UserModel, Integer> {
+public interface UserModelRepository extends Repository<UserModel, Integer> {
 
     List<UserModel> findAll();
 
