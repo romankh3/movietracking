@@ -1,5 +1,7 @@
 package ua.romankh3.movie.tracking.rest.controller;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,10 @@ public class MovieController {
 
     @GetMapping
     public List<MovieEntity> getAllMovies() throws IOException {
-        httpURLConnectorService.sendGET();
+        String result = httpURLConnectorService.sendGET();
+        Document doc = Jsoup.parse(result);
+        System.out.println(doc);
+        doc.body();
         return new ArrayList<>();
     }
 }

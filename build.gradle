@@ -30,6 +30,8 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtime 'org.hsqldb:hsqldb'
 
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	compile 'org.jsoup:jsoup:1.7.2'
 	compile 'org.apache.commons:commons-lang3:3.0'
 
 	testCompile 'org.springframework.boot:spring-boot-starter-test'

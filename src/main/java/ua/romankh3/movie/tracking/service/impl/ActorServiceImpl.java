@@ -41,26 +41,21 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public Integer addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
         UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(favoriteActorEntity.getUser_id());
-        Optional<ActorModel> actorModelOptional = actorModelRepository.findByFirstNameAndLastName(favoriteActorEntity.getFirstName(),
-                                                                                                  favoriteActorEntity.getLastName());
+        Optional<ActorModel> actorModelOptional = actorModelRepository.findById(favoriteActorEntity.getActor_id());
         ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(favoriteActorEntity));
+
         user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
-        List<User_x_ActorModel> all = user_x_actorModelRepository.findAll();
-        System.out.println(all);
         return actorModel.getId();
     }
 
     @Override
     public Integer removeFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
         UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(favoriteActorEntity.getUser_id());
-        Optional<ActorModel> actorModelOptional = actorModelRepository.findByFirstNameAndLastName(favoriteActorEntity.getFirstName(),
-                                                                                                  favoriteActorEntity.getLastName());
+        Optional<ActorModel> actorModelOptional = actorModelRepository.findById(favoriteActorEntity.getActor_id());
         if(!actorModelOptional.isPresent()) {
             return 0;
         }
         user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModelOptional.get().getId(), false));
-        List<User_x_ActorModel> all = user_x_actorModelRepository.findAll();
-        System.out.println(all);
         return actorModelOptional.get().getId();
     }
 
@@ -81,16 +76,13 @@ public class ActorServiceImpl implements ActorService {
 
     private ActorModel convertEntityToModel(final ActorEntity actorEntity) {
         ActorModel actorModel = new ActorModel();
-        actorModel.setFirstName(actorEntity.getFirstName());
-        actorModel.setLastName(actorEntity.getLastName());
+        actorModel.setId(actorEntity.getActor_id());
         return actorModel;
     }
 
     private ActorEntity convertModelToEntity(ActorModel model) {
         ActorEntity entity = new ActorEntity();
         entity.setActor_id(model.getId());
-        entity.setFirstName(model.getFirstName());
-        entity.setLastName(model.getLastName());
         return entity;
     }
 }
