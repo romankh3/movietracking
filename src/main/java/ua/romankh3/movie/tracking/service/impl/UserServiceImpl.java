@@ -55,12 +55,16 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setFirstName(userModel.getFirstName());
         userEntity.setLastName(userModel.getLastName());
+        userEntity.setPassword(userModel.getPassword());
+        userEntity.setEmail(userModel.getEmail());
         userEntity.setUser_id(userModel.getId());
         return userEntity;
     }
 
     private UserModel toUserModel(final UserEntity userEntity) {
         UserModel userModel = new UserModel();
+        userModel.setEmail(userEntity.getEmail());
+        userModel.setPassword(userEntity.getPassword());
         userModel.setFirstName(userEntity.getFirstName());
         userModel.setLastName(userEntity.getLastName());
         return userModel;
