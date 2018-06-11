@@ -15,7 +15,7 @@ public class ValidationServiceImpl implements ValidationService {
 
     @Override
     public void validateUser(UserEntity userEntity) throws AlreadyExistException {
-        boolean present = userModelRepository.findByFirstNameAndLastName(userEntity.getFirstName(), userEntity.getLastName()).isPresent();
+        boolean present = userModelRepository.findByEmail(userEntity.getEmail()).isPresent();
         if(present) {
             throw new AlreadyExistException("User with this First and Last name already exist!");
         }

@@ -2,6 +2,9 @@ package ua.romankh3.movie.tracking.db.model;
 
 import java.io.Serializable;
 
+/**
+ * Primary Key for User_x_Actor table.
+ */
 public class User_x_ActorPK implements Serializable {
 
     private Integer user_id;

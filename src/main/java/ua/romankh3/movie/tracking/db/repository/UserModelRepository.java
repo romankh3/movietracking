@@ -14,7 +14,7 @@ public interface UserModelRepository extends Repository<UserModel, Integer> {
 
     Optional<UserModel> findById(final Integer id);
 
-    Optional<UserModel> findByFirstNameAndLastName(final String firstName, final String lastName);
+    Optional<UserModel> findByEmail(final String email);
 
     UserModel deleteById(final Integer id);
 }

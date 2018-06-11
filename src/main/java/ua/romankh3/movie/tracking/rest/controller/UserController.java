@@ -6,6 +6,7 @@ import ua.romankh3.movie.tracking.exception.AlreadyExistException;
 import ua.romankh3.movie.tracking.rest.entity.UserEntity;
 import ua.romankh3.movie.tracking.service.UserService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class UserController {
         return userService.createUser(userEntity).getId();
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public UserEntity delete(@PathVariable("id") Integer id) {
         return userService.delete(id);
     }

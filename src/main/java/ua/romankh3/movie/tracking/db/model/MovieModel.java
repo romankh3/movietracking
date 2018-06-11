@@ -9,6 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Simple JavaBean object for a Movie table.
+ */
 @Entity
 @Table(name = "Movie")
 public class MovieModel extends BaseModel {

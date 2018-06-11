@@ -6,8 +6,10 @@ DROP TABLE User_x_Movie IF EXISTS;
 
 CREATE TABLE User (
   id INTEGER IDENTITY PRIMARY KEY,
-  first_name VARCHAR(100) NOT NULL,
-  last_name VARCHAR(100) NOT NULL
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Actor (

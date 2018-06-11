@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+/**
+ * Simple JavaBean object for a User_x_Actor table.
+ */
 @Entity
 @Table(name = "User_x_Actor")
 public class User_x_ActorModel {
