@@ -7,7 +7,6 @@ For movie and actor information we suggest you could use https://www.themoviedb.
 
 
 Create a simple API for tracking new movies with favorite actors. API must work with next requests:
-
 * Register new user
 * Add favorite actor
 * Remove favorite actor
@@ -24,3 +23,6 @@ Bonus task:
 
 ###### Show All users:
 curl -X GET http://localhost:8080/user/ -v
+
+###### Delete User:
+curl -X DELETE http://localhost:8080/user/{user_id}
