@@ -3,6 +3,7 @@ package ua.romankh3.movie.tracking.db.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import ua.romankh3.movie.tracking.db.model.base.BaseModel;
 
 import javax.persistence.*;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "User_x_Actor")
-public class User_x_ActorModel {
+public class User_x_ActorModel extends BaseModel {
 
     @EmbeddedId
     private User_x_ActorPK id;

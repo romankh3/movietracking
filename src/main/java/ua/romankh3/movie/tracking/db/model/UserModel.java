@@ -22,6 +22,17 @@ public class UserModel extends NameModel {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "secret_key")
+    private String secretKey;
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
     public String getEmail() {
         return email;
     }

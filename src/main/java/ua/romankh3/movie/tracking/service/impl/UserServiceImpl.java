@@ -3,12 +3,13 @@ package ua.romankh3.movie.tracking.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.romankh3.movie.tracking.db.model.UserModel;
-import ua.romankh3.movie.tracking.exception.AlreadyExistException;
+import ua.romankh3.movie.tracking.db.repository.UserModelRepository;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.UserEntity;
-import ua.romankh3.movie.tracking.db.repository.UserModelRepository;
+import ua.romankh3.movie.tracking.service.EmailService;
 import ua.romankh3.movie.tracking.service.UserService;
 import ua.romankh3.movie.tracking.service.ValidationService;
+import ua.romankh3.movie.tracking.util.KeyGenerator;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +24,20 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ValidationService validationService;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
-    public UserModel createUser(UserEntity userEntity) throws AlreadyExistException {
+    public UserModel createUser(UserEntity userEntity) throws Exception {
+
+        //todo try to implement it in AOP.
         validationService.validateUser(userEntity);
-        return userModelRepository.save(toUserModel(userEntity));
+
+        UserModel userModel = toUserModel(userEntity);
+
+        emailService.sendEmail(userModel.getSecretKey());
+
+        return userModelRepository.save(userModel);
     }
 
     @Override
@@ -57,16 +68,16 @@ public class UserServiceImpl implements UserService {
         userEntity.setLastName(userModel.getLastName());
         userEntity.setPassword(userModel.getPassword());
         userEntity.setEmail(userModel.getEmail());
-        userEntity.setUser_id(userModel.getId());
         return userEntity;
     }
 
-    private UserModel toUserModel(final UserEntity userEntity) {
+    private UserModel toUserModel(final UserEntity userEntity) throws Exception {
         UserModel userModel = new UserModel();
         userModel.setEmail(userEntity.getEmail());
         userModel.setPassword(userEntity.getPassword());
         userModel.setFirstName(userEntity.getFirstName());
         userModel.setLastName(userEntity.getLastName());
+        userModel.setSecretKey(KeyGenerator.generateSecretKey());
         return userModel;
     }
 }

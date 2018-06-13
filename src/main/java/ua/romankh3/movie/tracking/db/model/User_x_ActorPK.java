@@ -1,16 +1,15 @@
 package ua.romankh3.movie.tracking.db.model;
 
-import java.io.Serializable;
+import ua.romankh3.movie.tracking.db.model.base.BaseModel;
 
 /**
  * Primary Key for User_x_Actor table.
  */
-public class User_x_ActorPK implements Serializable {
+public class User_x_ActorPK extends BaseModel {
 
     private Integer user_id;
 
     private Integer actor_id;
-
 
     public Integer getUser_id() {
         return user_id;

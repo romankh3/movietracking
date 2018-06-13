@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
  * Used as a bse class for object needing these properties.
  */
 @MappedSuperclass
-public abstract class NameModel extends BaseModel {
+public abstract class NameModel extends IdModel {
 
     @Column( name = "last_name" )
     private String lastName;

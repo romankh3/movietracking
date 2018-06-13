@@ -9,13 +9,14 @@ CREATE TABLE User (
   first_name VARCHAR(100),
   last_name VARCHAR(100),
   email VARCHAR(100) NOT NULL,
-  password VARCHAR(100) NOT NULL
+  password VARCHAR(100) NOT NULL,
+  secret_key VARCHAR(100)
 );
 
 CREATE TABLE Actor (
   id INTEGER IDENTITY PRIMARY KEY,
-  first_name VARCHAR(100) NOT NULL,
-  last_name VARCHAR(100) NOT NULL
+  first_name VARCHAR(100),
+  last_name VARCHAR(100)
 );
 
 CREATE TABLE User_x_Actor (

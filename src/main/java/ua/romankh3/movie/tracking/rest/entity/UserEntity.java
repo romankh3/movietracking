@@ -10,9 +10,6 @@ import java.io.Serializable;
 public class UserEntity implements Serializable, Cloneable {
 
     @XmlElement
-    private Integer user_id;
-
-    @XmlElement
     private String firstName;
 
     @XmlElement
@@ -41,14 +38,6 @@ public class UserEntity implements Serializable, Cloneable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
     }
 
     public String getFirstName() {

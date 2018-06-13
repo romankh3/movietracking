@@ -1,6 +1,5 @@
 package ua.romankh3.movie.tracking.rest.entity;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
@@ -8,6 +7,28 @@ public class ActorEntity implements Serializable, Cloneable {
 
     @XmlElement
     private Integer actor_id;
+
+    @XmlElement
+    private String firstName;
+
+    @XmlElement
+    private String lastName;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public Integer getActor_id() {
         return actor_id;
