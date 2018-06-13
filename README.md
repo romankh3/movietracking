@@ -19,10 +19,13 @@ Bonus task:
 * Subscribe for notifying about release movies with favorite actors by email 
 * Describe and propose any feature that you think could be useful for movie fans on this simple API"
 
-#####Commands to use:
+##### Commands to use:
 
 ###### Show All users:
 curl -X GET http://localhost:8080/user/ -v
 
 ###### Delete User:
 curl -X DELETE http://localhost:8080/user/{user_id}
+
+###### Swagger UI:
+http://localhost:8080/swagger-ui.html
