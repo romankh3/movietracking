@@ -8,12 +8,15 @@ import ua.romankh3.movie.tracking.db.model.base.BaseModel;
 
 import javax.persistence.*;
 
+/**
+ * Simple JavaBean object for a User_x_Movie table.
+ */
 @Entity
-@Table(name = "User_x_Actor")
+@Table(name = "User_x_Movie")
 public class User_x_MovieModel extends BaseModel {
 
     @EmbeddedId
-    private User_x_ActorPK id;
+    private User_x_MoviePK id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -26,11 +29,11 @@ public class User_x_MovieModel extends BaseModel {
     @Column(name = "watched")
     private Boolean watched;
 
-    public User_x_ActorPK getId() {
+    public User_x_MoviePK getId() {
         return id;
     }
 
-    public void setId(User_x_ActorPK id) {
+    public void setId(User_x_MoviePK id) {
         this.id = id;
     }
 

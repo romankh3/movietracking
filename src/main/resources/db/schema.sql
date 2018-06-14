@@ -34,8 +34,8 @@ ALTER TABLE User_x_Actor
   FOREIGN KEY (actor_id) REFERENCES Actor(id);
 
 CREATE TABLE Movie (
-  id INTEGER IDENTITY PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(100),
   year INTEGER
 );
 
@@ -49,6 +49,7 @@ CREATE TABLE User_x_Movie (
 ALTER TABLE User_x_Movie
   ADD CONSTRAINT fk_User_x_Movie_User
   FOREIGN KEY (user_id) REFERENCES User(id);
+
 ALTER TABLE User_x_Movie
   ADD CONSTRAINT fk_User_x_Movie_Movie
   FOREIGN KEY (movie_id) REFERENCES Movie(id);

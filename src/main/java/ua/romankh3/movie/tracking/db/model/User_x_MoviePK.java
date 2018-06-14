@@ -3,11 +3,12 @@ package ua.romankh3.movie.tracking.db.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import ua.romankh3.movie.tracking.db.model.base.BaseModel;
 
 /**
  * Primary Key for {@link User_x_MovieModel} table.
  */
-public class User_x_MoviePK {
+public class User_x_MoviePK extends BaseModel {
 
     private Integer user_id;
 

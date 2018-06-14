@@ -3,10 +3,11 @@ package ua.romankh3.movie.tracking.db.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import ua.romankh3.movie.tracking.db.model.base.IdModel;
+import ua.romankh3.movie.tracking.db.model.base.BaseModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -14,7 +15,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Movie")
-public class MovieModel extends IdModel {
+public class MovieModel extends BaseModel {
+
+    @Id
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -36,6 +40,14 @@ public class MovieModel extends IdModel {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

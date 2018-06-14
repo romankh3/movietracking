@@ -1,13 +1,12 @@
 package ua.romankh3.movie.tracking.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ua.romankh3.movie.tracking.exception.NotFoundException;
+import ua.romankh3.movie.tracking.rest.entity.WatchedMovieEntity;
 import ua.romankh3.movie.tracking.service.MovieService;
-import ua.romankh3.movie.tracking.service.TmdbAPIService;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -15,14 +14,21 @@ import java.io.IOException;
 public class MovieController {
 
     @Autowired
-    private TmdbAPIService tmdbAPIService;
-
-    @Autowired
     private MovieService movieService;
 
     @GetMapping
-    public String getAllMovies() throws IOException {
-        return tmdbAPIService.retrieveMovies("/movie/popular");
+    public String getPopularMovies() throws IOException {
+        return movieService.retrievePopularMovies("/movie/popular");
+    }
+
+    @PostMapping("/watched")
+    public void markMovieWatched(@RequestBody @Valid WatchedMovieEntity watchedMovieEntity) throws NotFoundException {
+        movieService.markMovieAsWatched(watchedMovieEntity);
+    }
+
+    @PostMapping("/unwatched")
+    public void markMovieUnwatched(@RequestBody @Valid WatchedMovieEntity watchedMovieEntity) throws NotFoundException {
+        movieService.markMovieAsUnWatched(watchedMovieEntity);
     }
 
     @GetMapping("/{user_id}/")
