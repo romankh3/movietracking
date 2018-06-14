@@ -19,6 +19,13 @@ Bonus task:
 * Subscribe for notifying about release movies with favorite actors by email 
 * Describe and propose any feature that you think could be useful for movie fans on this simple API"
 
+## How to run:
+```$xslt
+$ git clone https://github.com/romankh3/movietracking
+$ cd movietracking
+$ ./run.sh
+```
+
 ## Commands to use:
 
 #### Delete User:

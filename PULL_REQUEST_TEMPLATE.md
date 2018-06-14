@@ -1,4 +1,4 @@
-Isssue Number, if issue exists.
+Issue Number, if it exists.
 
 Description about changes, which done.
 

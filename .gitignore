@@ -3,7 +3,6 @@
 build/*
 out/*
 target/*
-!gragle/wrapper/gradle-wrapper.jar
 
 # Package Files #
 *.jar
