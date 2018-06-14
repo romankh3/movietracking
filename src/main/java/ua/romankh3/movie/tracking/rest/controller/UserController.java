@@ -2,11 +2,9 @@ package ua.romankh3.movie.tracking.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ua.romankh3.movie.tracking.exception.AlreadyExistException;
 import ua.romankh3.movie.tracking.rest.entity.UserEntity;
 import ua.romankh3.movie.tracking.service.UserService;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,12 +21,12 @@ public class UserController {
     }
 
     @PostMapping
-    public Integer createUser(@RequestBody @Valid UserEntity userEntity) throws AlreadyExistException {
+    public Integer createUser(@RequestBody @Valid UserEntity userEntity) throws Exception {
         return userService.createUser(userEntity).getId();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public UserEntity delete(@PathVariable("id") Integer id) {
-        return userService.delete(id);
+    public void delete(@PathVariable("id") Integer id) {
+        userService.delete(id);
     }
 }

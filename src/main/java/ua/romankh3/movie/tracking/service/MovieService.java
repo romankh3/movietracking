@@ -1,12 +1,17 @@
 package ua.romankh3.movie.tracking.service;
 
 import ua.romankh3.movie.tracking.db.model.MovieModel;
+import ua.romankh3.movie.tracking.exception.NotFoundException;
+import ua.romankh3.movie.tracking.rest.entity.MovieEntity;
+import ua.romankh3.movie.tracking.rest.entity.WatchedMovieEntity;
 
 public interface MovieService {
 
-    MovieModel createMovieModel(MovieModel movieModel);
+    MovieModel createMovieModel(final MovieEntity movieEntity);
 
-    void markMovieAsViewed();
+    void markMovieAsWatched(final WatchedMovieEntity watchedMovieEntity) throws NotFoundException;
 
-    void markMovieAsUnViewed();
+    void markMovieAsUnWatched(final WatchedMovieEntity watchedMovieEntity);
+
+    String retrieveMoviesByFavoriteActors(Integer userId);
 }

@@ -16,7 +16,6 @@ import ua.romankh3.movie.tracking.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -31,32 +30,26 @@ public class ActorServiceImpl implements ActorService {
     private UserService userService;
 
     @Override
-    public List<ActorEntity> findAll() {
-        return actorModelRepository.findAll()
-                .stream()
-                .map(this::convertModelToEntity)
-                .collect(Collectors.toList());
+    public List<ActorModel> retrieveByUserId(final UserModel userModel) throws NotFoundException {
+        return null;
     }
 
     @Override
-    public Integer addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
-        UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(favoriteActorEntity.getUser_id());
+    public void addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+        UserModel userModel = userService.retrieveExistingEntity(favoriteActorEntity.getUser_id());
         Optional<ActorModel> actorModelOptional = actorModelRepository.findById(favoriteActorEntity.getActor_id());
         ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(favoriteActorEntity));
 
         user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
-        return actorModel.getId();
     }
 
     @Override
-    public Integer removeFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
-        UserModel userModel = userService.retrieveUserByIdAndShouldNotBeNull(favoriteActorEntity.getUser_id());
+    public void removeFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+        UserModel userModel = userService.retrieveExistingEntity(favoriteActorEntity.getUser_id());
         Optional<ActorModel> actorModelOptional = actorModelRepository.findById(favoriteActorEntity.getActor_id());
-        if(!actorModelOptional.isPresent()) {
-            return 0;
-        }
-        user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModelOptional.get().getId(), false));
-        return actorModelOptional.get().getId();
+        user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(),
+                                         actorModelOptional.get().getId(),
+                                         false));
     }
 
     private User_x_ActorModel fillUser_x_Actor(Integer userId, Integer actorId, boolean favorite) {

@@ -3,7 +3,7 @@ package ua.romankh3.movie.tracking.rest.entity;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 
-public class ViewedMovieEntity extends MovieEntity {
+public class WatchedMovieEntity extends MovieEntity {
 
     @NotNull
     @XmlElement

@@ -1,12 +1,12 @@
 package ua.romankh3.movie.tracking.db.repository;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ua.romankh3.movie.tracking.db.model.UserModel;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserModelRepository extends Repository<UserModel, Integer> {
+public interface UserModelRepository extends JpaRepository<UserModel, Integer> {
 
     List<UserModel> findAll();
 
@@ -16,5 +16,5 @@ public interface UserModelRepository extends Repository<UserModel, Integer> {
 
     Optional<UserModel> findByEmail(final String email);
 
-    UserModel deleteById(final Integer id);
+    void deleteById(final Integer id);
 }

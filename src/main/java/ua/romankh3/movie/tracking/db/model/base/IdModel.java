@@ -20,10 +20,6 @@ public abstract class IdModel extends BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    public boolean isNew() {
-        return this.id == null;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }

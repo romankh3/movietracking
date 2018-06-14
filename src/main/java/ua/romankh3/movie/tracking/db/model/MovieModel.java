@@ -22,7 +22,6 @@ public class MovieModel extends IdModel {
     @Column(name = "year")
     private Integer year;
 
-
     public String getName() {
         return name;
     }

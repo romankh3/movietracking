@@ -3,16 +3,15 @@ package ua.romankh3.movie.tracking.db.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import ua.romankh3.movie.tracking.db.model.base.BaseModel;
 
 /**
- * Primary Key for User_x_Actor table.
+ * Primary Key for {@link User_x_MovieModel} table.
  */
-public class User_x_ActorPK extends BaseModel {
+public class User_x_MoviePK {
 
     private Integer user_id;
 
-    private Integer actor_id;
+    private Integer movie_id;
 
     public Integer getUser_id() {
         return user_id;
@@ -22,12 +21,12 @@ public class User_x_ActorPK extends BaseModel {
         this.user_id = user_id;
     }
 
-    public Integer getActor_id() {
-        return actor_id;
+    public Integer getMovie_id() {
+        return movie_id;
     }
 
-    public void setActor_id(Integer actor_id) {
-        this.actor_id = actor_id;
+    public void setMovie_id(Integer movie_id) {
+        this.movie_id = movie_id;
     }
 
     @Override

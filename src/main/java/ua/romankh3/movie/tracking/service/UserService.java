@@ -12,7 +12,7 @@ public interface UserService {
 
     UserModel createUser(final UserEntity userEntity) throws Exception;
 
-    UserEntity delete(final Integer id);
+    void delete(final Integer id);
 
-    UserModel retrieveUserByIdAndShouldNotBeNull(final Integer id) throws NotFoundException;
+    UserModel retrieveExistingEntity(final Integer id) throws NotFoundException;
 }

@@ -43,17 +43,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findAll() {
         return userModelRepository.findAll().stream()
-                .map(this::toUserEntity)
-                .collect(Collectors.toList());
+                                            .map(this::toUserEntity)
+                                            .collect(Collectors.toList());
     }
 
     @Override
-    public UserEntity delete(Integer id) {
-        return toUserEntity(userModelRepository.deleteById(id));
+    public void delete(Integer id) {
+        userModelRepository.deleteById(id);
     }
 
     @Override
-    public UserModel retrieveUserByIdAndShouldNotBeNull(Integer id) throws NotFoundException {
+    public UserModel retrieveExistingEntity(Integer id) throws NotFoundException {
         Optional<UserModel> userOptional = userModelRepository.findById(id);
         if(userOptional.isPresent()) {
             return userOptional.get();

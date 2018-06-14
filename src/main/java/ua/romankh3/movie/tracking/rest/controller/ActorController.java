@@ -18,16 +18,16 @@ public class ActorController {
     private ActorService actorService;
 
     @PostMapping(name = "/favorite")
-    public Integer addFavoriteActor(@RequestBody @Valid FavoriteActorEntity favoriteActorEntity)
+    public void addFavoriteActor(@RequestBody @Valid FavoriteActorEntity favoriteActorEntity)
             throws NotFoundException {
 
-        return actorService.addFavoriteActor(favoriteActorEntity);
+        actorService.addFavoriteActor(favoriteActorEntity);
     }
 
     @PutMapping(name = "favorite")
-    public Integer removeFavoriteActor(@RequestBody @Valid FavoriteActorEntity favoriteActorEntity)
+    public void removeFavoriteActor(@RequestBody @Valid FavoriteActorEntity favoriteActorEntity)
             throws NotFoundException {
 
-        return actorService.removeFavoriteActor(favoriteActorEntity);
+        actorService.removeFavoriteActor(favoriteActorEntity);
     }
 }
