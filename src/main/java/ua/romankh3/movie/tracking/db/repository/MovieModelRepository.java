@@ -1,7 +1,6 @@
 package ua.romankh3.movie.tracking.db.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ua.romankh3.movie.tracking.db.model.ActorModel;
 import ua.romankh3.movie.tracking.db.model.MovieModel;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface MovieModelRepository extends JpaRepository<MovieModel, Integer>
 
     Optional<MovieModel> findById(final Integer id);
 
-    MovieModel save(final ActorModel MovieModel);
+    Optional<MovieModel> findByTmdbId(final Integer tmdbId);
 
-    Optional<MovieModel> findByName(String name);
+    MovieModel save(final MovieModel movieModel);
 }

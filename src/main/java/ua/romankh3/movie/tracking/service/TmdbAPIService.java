@@ -1,15 +1,17 @@
 package ua.romankh3.movie.tracking.service;
 
+import ua.romankh3.movie.tracking.mapper.MovieTMDB;
+
 import java.io.IOException;
 import java.util.List;
 
 public interface TmdbAPIService {
 
-    String retrieveMovies() throws IOException;
+    List<MovieTMDB> retrieveMovies() throws IOException;
 
-    String retrieveMovies(String primaryReleaseYear);
+    List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear);
 
-    String retrieveMovies(List<Integer> favoriteActorIds);
+    List<MovieTMDB> retrieveMovies(List<Integer> favoriteActorIds);
 
-    String retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds);
+    List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear, List<Integer> favoriteActorIds);
 }

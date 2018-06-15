@@ -7,6 +7,7 @@ import ua.romankh3.movie.tracking.db.repository.MovieModelRepository;
 import ua.romankh3.movie.tracking.db.repository.User_x_ActorModelRepository;
 import ua.romankh3.movie.tracking.db.repository.User_x_MovieModelRepository;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
+import ua.romankh3.movie.tracking.mapper.MovieTMDB;
 import ua.romankh3.movie.tracking.rest.entity.MovieEntity;
 import ua.romankh3.movie.tracking.rest.entity.WatchedMovieEntity;
 import ua.romankh3.movie.tracking.service.MovieService;
@@ -40,7 +41,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieModel createMovieModel(final MovieEntity movieEntity) {
-        return movieModelRepository.save(toModel(movieEntity));
+        MovieModel movieModel = toModel(movieEntity);
+        return movieModelRepository.save(movieModel);
     }
 
     @Override
@@ -54,20 +56,45 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public String retrieveMoviesByFavoriteActors(Integer userId) throws NotFoundException {
+    public List<MovieTMDB> retrieveMoviesByFavoriteActors(Integer userId) throws NotFoundException {
         UserModel userModel = userService.retrieveExistingEntity(userId);
-        List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
-        List<Integer> actorIds = user_x_actorModels.stream()
-                                                   .map(it -> it.getId().getActor_id())
-                                                   .collect(Collectors.toList());
-        return retrieveMoviesByActorIdIn(actorIds);
+
+        List<Integer> watchedMovieIds = retrieveWatchedMovieIds(userModel);
+        List<Integer> actorIds = retrieveFavoriteActorIds(userModel);
+
+        return tmdbAPIService.retrieveMovies(actorIds).stream()
+                                                      .filter(it -> !watchedMovieIds.contains(it.getId()))
+                                                      .collect(Collectors.toList());
     }
 
-    private String retrieveMoviesByActorIdIn(List<Integer> actorIds) {
-        return tmdbAPIService.retrieveMovies(actorIds);
+    @Override
+    public List<MovieTMDB> retrieveMoviesByActorsAndReleaseYear(Integer userId, Integer year) throws NotFoundException {
+        UserModel userModel = userService.retrieveExistingEntity(userId);
+        List<Integer> watchedMovieIds = retrieveWatchedMovieIds(userModel);
+        List<Integer> actorIds = retrieveFavoriteActorIds(userModel);
+
+        return tmdbAPIService.retrieveMovies(year, actorIds).stream()
+                                                            .filter(it -> !watchedMovieIds.contains(it.getId()))
+                                                            .collect(Collectors.toList());
+    }
+
+    private List<Integer> retrieveFavoriteActorIds(final UserModel userModel) {
+        List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
+        return user_x_actorModels.stream()
+                .map(it -> it.getActorModel().getTmdbId())
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> retrieveWatchedMovieIds(final UserModel userModel) {
+        return user_x_movieModelRepository.findByUserModel(userModel)
+                .stream()
+                .filter(it -> !it.getWatched())
+                .map(it -> it.getMovieModel().getId())
+                .collect(Collectors.toList());
     }
 
     private void markMovie(final WatchedMovieEntity watchedMovieEntity, boolean isWatched) throws NotFoundException {
+        // TODO: 15.06.2018 fix saving wathing movie
         UserModel userModel = userService.retrieveExistingEntity(watchedMovieEntity.getUser_id());
         Optional<MovieModel> movieModelOptional = movieModelRepository.findById(watchedMovieEntity.getMovie_id());
         MovieModel movieModel = movieModelOptional.orElseGet(() -> createMovieModel(watchedMovieEntity));
@@ -90,9 +117,7 @@ public class MovieServiceImpl implements MovieService {
 
     private MovieModel toModel(final MovieEntity movieEntity) {
         MovieModel mm = new MovieModel();
-        mm.setName(movieEntity.getName());
-        mm.setYear(movieEntity.getYear());
-        mm.setId(movieEntity.getMovie_id());
+        mm.setTmdbId(movieEntity.getMovie_id());
         return mm;
     }
 }

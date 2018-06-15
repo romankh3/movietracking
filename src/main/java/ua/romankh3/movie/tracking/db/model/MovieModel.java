@@ -3,7 +3,7 @@ package ua.romankh3.movie.tracking.db.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import ua.romankh3.movie.tracking.db.model.base.BaseModel;
+import ua.romankh3.movie.tracking.db.model.base.IdModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,39 +15,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Movie")
-public class MovieModel extends BaseModel {
+public class MovieModel extends IdModel {
 
-    @Id
-    private Integer id;
+    @Column(name = "tmdb_id")
+    private Integer tmdbId;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "year")
-    private Integer year;
-
-    public String getName() {
-        return name;
+    public Integer getTmdbId() {
+        return tmdbId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTmdbId(Integer tmdbId) {
+        this.tmdbId = tmdbId;
     }
 
     @Override

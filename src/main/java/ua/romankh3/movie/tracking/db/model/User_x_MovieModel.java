@@ -24,7 +24,7 @@ public class User_x_MovieModel extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_id", insertable = false, updatable = false)
-    private MovieModel modelModel;
+    private MovieModel movieModel;
 
     @Column(name = "watched")
     private Boolean watched;
@@ -45,12 +45,12 @@ public class User_x_MovieModel extends BaseModel {
         this.userModel = userModel;
     }
 
-    public MovieModel getModelModel() {
-        return modelModel;
+    public MovieModel getMovieModel() {
+        return movieModel;
     }
 
-    public void setModelModel(MovieModel modelModel) {
-        this.modelModel = modelModel;
+    public void setMovieModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
     }
 
     public Boolean getWatched() {
