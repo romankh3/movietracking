@@ -95,7 +95,7 @@ public class MovieServiceImpl implements MovieService {
 
     private void markMovie(final WatchedMovieEntity watchedMovieEntity, boolean isWatched) throws NotFoundException {
         UserModel userModel = userService.retrieveExistingEntity(watchedMovieEntity.getUser_id());
-        Optional<MovieModel> movieModelOptional = movieModelRepository.findById(watchedMovieEntity.getMovie_id());
+        Optional<MovieModel> movieModelOptional = movieModelRepository.findByTmdbId(watchedMovieEntity.getMovie_id());
         MovieModel movieModel = movieModelOptional.orElseGet(() -> createMovieModel(watchedMovieEntity));
 
         user_x_movieModelRepository.save(createUser_x_MovieModel(userModel, movieModel, isWatched));

@@ -38,7 +38,7 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public void addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
         UserModel userModel = userService.retrieveExistingEntity(favoriteActorEntity.getUser_id());
-        Optional<ActorModel> actorModelOptional = actorModelRepository.findById(favoriteActorEntity.getActor_id());
+        Optional<ActorModel> actorModelOptional = actorModelRepository.findByTmdbId(favoriteActorEntity.getActor_id());
         ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(favoriteActorEntity));
 
         user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
