@@ -88,13 +88,12 @@ public class MovieServiceImpl implements MovieService {
     private List<Integer> retrieveWatchedMovieIds(final UserModel userModel) {
         return user_x_movieModelRepository.findByUserModel(userModel)
                 .stream()
-                .filter(it -> !it.getWatched())
-                .map(it -> it.getMovieModel().getId())
+                .filter(User_x_MovieModel::getWatched)
+                .map(it -> it.getMovieModel().getTmdbId())
                 .collect(Collectors.toList());
     }
 
     private void markMovie(final WatchedMovieEntity watchedMovieEntity, boolean isWatched) throws NotFoundException {
-        // TODO: 15.06.2018 fix saving wathing movie
         UserModel userModel = userService.retrieveExistingEntity(watchedMovieEntity.getUser_id());
         Optional<MovieModel> movieModelOptional = movieModelRepository.findById(watchedMovieEntity.getMovie_id());
         MovieModel movieModel = movieModelOptional.orElseGet(() -> createMovieModel(watchedMovieEntity));
