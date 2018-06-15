@@ -47,7 +47,7 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     }
 
     @Override
-    public List<MovieTMDB> retrieveMovies(String primaryReleaseYear) {
+    public List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, null);
     }
 
@@ -57,13 +57,13 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     }
 
     @Override
-    public List<MovieTMDB> retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds) {
+    public List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear, List<Integer> favoriteActorIds) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, favoriteActorIds);
     }
 
     private List<MovieTMDB> callToTMDB(String path,
-                              String primaryReleaseYear,
-                              List<Integer> favoriteActorIds) {
+                                       Integer primaryReleaseYear,
+                                       List<Integer> favoriteActorIds) {
         try {
             String url = createTmdbUrl(path, primaryReleaseYear, favoriteActorIds);
             HttpResponse<JsonNode> jsonResponse = Unirest.get(url).asJson();
@@ -83,7 +83,7 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     }
 
     private String createTmdbUrl(String path,
-                                 String primaryReleaseYear,
+                                 Integer primaryReleaseYear,
                                  List<Integer> favoriteActors) throws URISyntaxException {
         URIBuilder uriBuilder = new URIBuilder(tmdbApiBaseUrl + path);
         uriBuilder.addParameter(LANGUAGE, tmdbLanguage);
@@ -94,7 +94,7 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
         }
 
         if(primaryReleaseYear != null) {
-            uriBuilder.addParameter(PRIMARY_RELEASE_YEAR, primaryReleaseYear);
+            uriBuilder.addParameter(PRIMARY_RELEASE_YEAR, String.valueOf(primaryReleaseYear));
         }
         return uriBuilder.build().toString();
     }

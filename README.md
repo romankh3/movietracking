@@ -22,11 +22,12 @@ $ git clone https://github.com/romankh3/movietracking
 $ cd movietracking
 $ ./run.sh
 ```
-
 # Rest API:
 
-#### Delete User:
-curl -X DELETE http://localhost:8080/user/{user_id}
+run application and go to Swagger UI.
+http://localhost:8080/swagger-ui.html
+
+# Steps to reproduce API.
 
 #### Create new User:
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
@@ -39,8 +40,20 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 #### Show All users:
 curl -X GET --header 'Accept: application/json' 'http://localhost:8080/user'
 
-#### Show the most popular movies
-curl -X GET --header 'Accept: text/plain' 'http://localhost:8080/movie'
+#### Add favorite actors (id: 287, 819) for User which was created above.
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
+   "actor_id": 287, \ 
+   "user_id": 0 \ 
+ }' 'http://localhost:8080/actor'
+ 
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
+   "actor_id": 819, \ 
+   "user_id": 0 \ 
+ }' 'http://localhost:8080/actor'
+ 
+#### Get Unwatched movies for User with id=0 with favorites actors.
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0'
+
 
 #### Set movie with id = 550 as watched:
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
@@ -48,11 +61,14 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
    "user_id": 0 \ 
  }' 'http://localhost:8080/movie/watched'
  
+#### Get Unwatched movies for User with id=0 with favorites actors.
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0'
+ 
 #### Set movie with id = 550 as unwatched:
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
    "movie_id": 500, \ 
    "user_id": 0 \ 
  }' 'http://localhost:8080/movie/unwatched'
-
-#### Swagger UI:
-http://localhost:8080/swagger-ui.html
+ 
+#### Delete User:
+ curl -X DELETE http://localhost:8080/user/{user_id}

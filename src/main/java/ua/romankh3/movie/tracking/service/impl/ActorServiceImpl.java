@@ -31,6 +31,7 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public List<ActorModel> retrieveByUserId(final UserModel userModel) throws NotFoundException {
+        // TODO: 15.06.2018 Implement it
         return null;
     }
 
@@ -69,13 +70,15 @@ public class ActorServiceImpl implements ActorService {
 
     private ActorModel convertEntityToModel(final ActorEntity actorEntity) {
         ActorModel actorModel = new ActorModel();
-        actorModel.setId(actorEntity.getActor_id());
+        actorModel.setThdbId(actorEntity.getActor_id());
         return actorModel;
     }
 
     private ActorEntity convertModelToEntity(ActorModel model) {
         ActorEntity entity = new ActorEntity();
-        entity.setActor_id(model.getId());
+        entity.setFirstName(model.getFirstName());
+        entity.setLastName(model.getLastName());
+        entity.setActor_id(model.getThdbId());
         return entity;
     }
 }

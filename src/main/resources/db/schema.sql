@@ -16,7 +16,8 @@ CREATE TABLE User (
 CREATE TABLE Actor (
   id INTEGER IDENTITY PRIMARY KEY,
   first_name VARCHAR(100),
-  last_name VARCHAR(100)
+  last_name VARCHAR(100),
+  thdm_id INTEGER NOT NULL
 );
 
 CREATE TABLE User_x_Actor (
@@ -36,7 +37,8 @@ ALTER TABLE User_x_Actor
 CREATE TABLE Movie (
   id INTEGER PRIMARY KEY,
   name VARCHAR(100),
-  year INTEGER
+  year INTEGER,
+  thdm_id INTEGER NOT NULL
 );
 
 CREATE TABLE User_x_Movie (

@@ -29,10 +29,17 @@ public class MovieController {
         movieService.markMovieAsUnWatched(watchedMovieEntity);
     }
 
-    @GetMapping("/{user_id}/")
+    @GetMapping("/{user_id}")
     public List<MovieTMDB> getUnwatchedMoviesWithFavoriteActors(@PathVariable("user_id") Integer userId)
             throws NotFoundException {
 
         return movieService.retrieveMoviesByFavoriteActors(userId);
+    }
+
+    @GetMapping("/{user_id}/{primary_release_year}")
+    public List<MovieTMDB> getUnwatchedMoviesWithFavoriteActorsWithYear(@PathVariable("user_id") Integer userId,
+                                                                            @PathVariable("year") Integer year) throws NotFoundException {
+
+        return movieService.retrieveMoviesByActorsAndReleaseYear(userId, year);
     }
 }

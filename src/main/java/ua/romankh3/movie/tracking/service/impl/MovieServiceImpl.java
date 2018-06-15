@@ -61,18 +61,26 @@ public class MovieServiceImpl implements MovieService {
         List<Integer> watchedMovieIds = retrieveWatchedMovieIds(userModel);
         List<Integer> actorIds = retrieveFavoriteActorIds(userModel);
 
-        List<MovieTMDB> movieTMDBS = retrieveMoviesByActorIdIn(actorIds);
-        return movieTMDBS.stream().filter(it -> !watchedMovieIds.contains(it.getId())).collect(Collectors.toList());
+        return tmdbAPIService.retrieveMovies(actorIds).stream()
+                                                      .filter(it -> !watchedMovieIds.contains(it.getId()))
+                                                      .collect(Collectors.toList());
     }
 
-    private List<MovieTMDB> retrieveMoviesByActorIdIn(List<Integer> actorIds) {
-        return tmdbAPIService.retrieveMovies(actorIds);
+    @Override
+    public List<MovieTMDB> retrieveMoviesByActorsAndReleaseYear(Integer userId, Integer year) throws NotFoundException {
+        UserModel userModel = userService.retrieveExistingEntity(userId);
+        List<Integer> watchedMovieIds = retrieveWatchedMovieIds(userModel);
+        List<Integer> actorIds = retrieveFavoriteActorIds(userModel);
+
+        return tmdbAPIService.retrieveMovies(year, actorIds).stream()
+                                                            .filter(it -> !watchedMovieIds.contains(it.getId()))
+                                                            .collect(Collectors.toList());
     }
 
     private List<Integer> retrieveFavoriteActorIds(final UserModel userModel) {
         List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
         return user_x_actorModels.stream()
-                .map(it -> it.getId().getActor_id())
+                .map(it -> it.getActorModel().getThdbId())
                 .collect(Collectors.toList());
     }
 
@@ -85,6 +93,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private void markMovie(final WatchedMovieEntity watchedMovieEntity, boolean isWatched) throws NotFoundException {
+        // TODO: 15.06.2018 fix saving wathing movie
         UserModel userModel = userService.retrieveExistingEntity(watchedMovieEntity.getUser_id());
         Optional<MovieModel> movieModelOptional = movieModelRepository.findById(watchedMovieEntity.getMovie_id());
         MovieModel movieModel = movieModelOptional.orElseGet(() -> createMovieModel(watchedMovieEntity));
@@ -109,7 +118,7 @@ public class MovieServiceImpl implements MovieService {
         MovieModel mm = new MovieModel();
         mm.setName(movieEntity.getName());
         mm.setYear(movieEntity.getYear());
-        mm.setId(movieEntity.getMovie_id());
+        mm.setThdmId(movieEntity.getMovie_id());
         return mm;
     }
 }

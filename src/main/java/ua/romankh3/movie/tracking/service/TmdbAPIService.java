@@ -9,9 +9,9 @@ public interface TmdbAPIService {
 
     List<MovieTMDB> retrieveMovies() throws IOException;
 
-    List<MovieTMDB> retrieveMovies(String primaryReleaseYear);
+    List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear);
 
     List<MovieTMDB> retrieveMovies(List<Integer> favoriteActorIds);
 
-    List<MovieTMDB> retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds);
+    List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear, List<Integer> favoriteActorIds);
 }

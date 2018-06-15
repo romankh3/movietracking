@@ -17,4 +17,6 @@ public interface MovieService {
     void markMovieAsUnWatched(final WatchedMovieEntity watchedMovieEntity) throws NotFoundException;
 
     List<MovieTMDB> retrieveMoviesByFavoriteActors(Integer userId) throws NotFoundException;
+
+    List<MovieTMDB> retrieveMoviesByActorsAndReleaseYear(Integer userId, Integer year) throws NotFoundException;
 }
