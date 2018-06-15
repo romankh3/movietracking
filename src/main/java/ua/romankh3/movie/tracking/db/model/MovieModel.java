@@ -17,37 +17,15 @@ import javax.persistence.Table;
 @Table(name = "Movie")
 public class MovieModel extends IdModel {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "tmdb_id")
+    private Integer tmdbId;
 
-    @Column(name = "year")
-    private Integer year;
-
-    @Column(name = "thdm_id")
-    private Integer thdmId;
-
-    public Integer getThdmId() {
-        return thdmId;
+    public Integer getTmdbId() {
+        return tmdbId;
     }
 
-    public void setThdmId(Integer thdmId) {
-        this.thdmId = thdmId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setTmdbId(Integer tmdbId) {
+        this.tmdbId = tmdbId;
     }
 
     @Override

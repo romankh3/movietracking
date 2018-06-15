@@ -70,15 +70,13 @@ public class ActorServiceImpl implements ActorService {
 
     private ActorModel convertEntityToModel(final ActorEntity actorEntity) {
         ActorModel actorModel = new ActorModel();
-        actorModel.setThdbId(actorEntity.getActor_id());
+        actorModel.setTmdbId(actorEntity.getActor_id());
         return actorModel;
     }
 
     private ActorEntity convertModelToEntity(ActorModel model) {
         ActorEntity entity = new ActorEntity();
-        entity.setFirstName(model.getFirstName());
-        entity.setLastName(model.getLastName());
-        entity.setActor_id(model.getThdbId());
+        entity.setActor_id(model.getTmdbId());
         return entity;
     }
 }

@@ -41,7 +41,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieModel createMovieModel(final MovieEntity movieEntity) {
-        return movieModelRepository.save(toModel(movieEntity));
+        MovieModel movieModel = toModel(movieEntity);
+        return movieModelRepository.save(movieModel);
     }
 
     @Override
@@ -80,7 +81,7 @@ public class MovieServiceImpl implements MovieService {
     private List<Integer> retrieveFavoriteActorIds(final UserModel userModel) {
         List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
         return user_x_actorModels.stream()
-                .map(it -> it.getActorModel().getThdbId())
+                .map(it -> it.getActorModel().getTmdbId())
                 .collect(Collectors.toList());
     }
 
@@ -116,9 +117,7 @@ public class MovieServiceImpl implements MovieService {
 
     private MovieModel toModel(final MovieEntity movieEntity) {
         MovieModel mm = new MovieModel();
-        mm.setName(movieEntity.getName());
-        mm.setYear(movieEntity.getYear());
-        mm.setThdmId(movieEntity.getMovie_id());
+        mm.setTmdbId(movieEntity.getMovie_id());
         return mm;
     }
 }
