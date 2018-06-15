@@ -7,7 +7,8 @@ Simple API for tracking new movies with favorite actors. For movie and actor inf
 * Add favorite actor - <b>DONE</b>
 * Remove favorite actor - <b>DONE</b>
 * Mark movie watched - <b>DONE</b>
-* Search by month and year unviewed movies with favorite actors
+* Search unwatched movies with favorite actors - <b>DONE</b>
+* Search by month and year unviewed movies with favorite actors - <b>IN PROCESS</b>
 
 
 #### Nice to Have:

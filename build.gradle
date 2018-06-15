@@ -31,6 +31,8 @@ dependencies {
 	compile 'com.mashape.unirest:unirest-java:1.4.9'
 	compile 'org.jsoup:jsoup:1.7.2'
 	compile 'org.apache.commons:commons-lang3:3.0'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+
 	runtime 'org.hsqldb:hsqldb'
 }
 

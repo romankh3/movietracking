@@ -1,13 +1,19 @@
 package ua.romankh3.movie.tracking.service.impl;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ua.romankh3.movie.tracking.mapper.MovieTMDB;
 import ua.romankh3.movie.tracking.service.TmdbAPIService;
 
 import java.io.IOException;
@@ -36,26 +42,26 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     private static final String DISCOVER_ACTOR = "/discover/actor";
 
     @Override
-    public String retrieveMovies() throws IOException {
+    public List<MovieTMDB> retrieveMovies() throws IOException {
         return callToTMDB(DISCOVER_MOVIE, null, null);
     }
 
     @Override
-    public String retrieveMovies(String primaryReleaseYear) {
+    public List<MovieTMDB> retrieveMovies(String primaryReleaseYear) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, null);
     }
 
     @Override
-    public String retrieveMovies(List<Integer> favoriteActorIds) {
+    public List<MovieTMDB> retrieveMovies(List<Integer> favoriteActorIds) {
         return callToTMDB(DISCOVER_MOVIE, null, favoriteActorIds);
     }
 
     @Override
-    public String retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds) {
+    public List<MovieTMDB> retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, favoriteActorIds);
     }
 
-    private String callToTMDB(String path,
+    private List<MovieTMDB> callToTMDB(String path,
                               String primaryReleaseYear,
                               List<Integer> favoriteActorIds) {
         try {
@@ -65,9 +71,12 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
             if(jsonResponse.getStatus() != HttpStatus.SC_OK) {
                 return null;
             }
+            String jsonList = jsonResponse.getBody().getObject().get("results").toString();
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<MovieTMDB> movieTMDBList = objectMapper.readValue(jsonList, new TypeReference<List<MovieTMDB>>(){} );
 
-            return jsonResponse.getBody().toString();
-        } catch (URISyntaxException | UnirestException e) {
+            return movieTMDBList;
+        } catch (URISyntaxException | UnirestException | IOException e) {
             e.printStackTrace();
         }
         return null;
