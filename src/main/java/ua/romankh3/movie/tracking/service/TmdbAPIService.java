@@ -5,18 +5,11 @@ import java.util.List;
 
 public interface TmdbAPIService {
 
-    String retrieveMovies(String path) throws IOException;
+    String retrieveMovies() throws IOException;
 
-    String retrieveMovies(String path, String primaryReleaseYear);
+    String retrieveMovies(String primaryReleaseYear);
 
-    String retrieveMovies(String path, String primaryReleaseYear, String primaryReleaseMonth);
+    String retrieveMovies(List<Integer> favoriteActorIds);
 
-    String retrieveMovies(String path, List<Integer> favoriteActorIds);
-
-    String retrieveMovies(String path, String primaryReleaseYear, List<Integer> favoriteActorIds);
-
-    String retrieveMovies(String path,
-                          String primaryReleaseYear,
-                          String primaryReleaseMonth,
-                          List<Integer> favoriteActorIds);
+    String retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds);
 }

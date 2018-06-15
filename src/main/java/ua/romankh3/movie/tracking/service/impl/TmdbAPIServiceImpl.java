@@ -13,6 +13,7 @@ import ua.romankh3.movie.tracking.service.TmdbAPIService;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.StringJoiner;
 
 
 @Service
@@ -27,51 +28,38 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     @Value("${tmdb.api.base.url}")
     private String tmdbApiBaseUrl;
 
-    public static final String API_KEY = "api_key";
-    public static final String LANGUAGE = "language";
-    public static final String PRIMARY_RELEASE_YEAR = "primary_release_year";
-    public static final String PRIMARY_RELEASE_MONTH = "???";
-    public static final String FAVORITE_ACTORS = "people";
+    private static final String API_KEY = "api_key";
+    private static final String LANGUAGE = "language";
+    private static final String PRIMARY_RELEASE_YEAR = "primary_release_year";
+    private static final String FAVORITE_ACTORS = "with_people";
+    private static final String DISCOVER_MOVIE = "/discover/movie";
+    private static final String DISCOVER_ACTOR = "/discover/actor";
 
     @Override
-    public String retrieveMovies(String path) throws IOException {
-        return callToTMDB(path, null, null, null);
+    public String retrieveMovies() throws IOException {
+        return callToTMDB(DISCOVER_MOVIE, null, null);
     }
 
     @Override
-    public String retrieveMovies(String path, String primaryReleaseYear) {
-        return callToTMDB(path, primaryReleaseYear, null, null);
+    public String retrieveMovies(String primaryReleaseYear) {
+        return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, null);
     }
 
     @Override
-    public String retrieveMovies(String path, String primaryReleaseYear, String primaryReleaseMonth) {
-        return callToTMDB(path, primaryReleaseYear, primaryReleaseMonth, null);
+    public String retrieveMovies(List<Integer> favoriteActorIds) {
+        return callToTMDB(DISCOVER_MOVIE, null, favoriteActorIds);
     }
 
     @Override
-    public String retrieveMovies(String path, List<Integer> favoriteActorIds) {
-        return callToTMDB(path, null, null, favoriteActorIds);
-    }
-
-    @Override
-    public String retrieveMovies(String path, String primaryReleaseYear, List<Integer> favoriteActorIds) {
-        return callToTMDB(path, primaryReleaseYear, null, favoriteActorIds);
-    }
-
-    @Override
-    public String retrieveMovies(String path,
-                                 String primaryReleaseYear,
-                                 String primaryReleaseMonth,
-                                 List<Integer> favoriteActorIds) {
-        return callToTMDB(path, primaryReleaseYear, primaryReleaseMonth, favoriteActorIds);
+    public String retrieveMovies(String primaryReleaseYear, List<Integer> favoriteActorIds) {
+        return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, favoriteActorIds);
     }
 
     private String callToTMDB(String path,
                               String primaryReleaseYear,
-                              String primaryReleaseMonth,
                               List<Integer> favoriteActorIds) {
         try {
-            String url = createTmdbUrl(path, primaryReleaseYear, primaryReleaseMonth, favoriteActorIds);
+            String url = createTmdbUrl(path, primaryReleaseYear, favoriteActorIds);
             HttpResponse<JsonNode> jsonResponse = Unirest.get(url).asJson();
 
             if(jsonResponse.getStatus() != HttpStatus.SC_OK) {
@@ -87,15 +75,26 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
 
     private String createTmdbUrl(String path,
                                  String primaryReleaseYear,
-                                 String primaryReleaseMonth,
                                  List<Integer> favoriteActors) throws URISyntaxException {
-        // todo implement the logic favorite actors and primary release date.
         URIBuilder uriBuilder = new URIBuilder(tmdbApiBaseUrl + path);
         uriBuilder.addParameter(LANGUAGE, tmdbLanguage);
         uriBuilder.addParameter(API_KEY, tmdbApiKey);
-        // todo implement joining ids in string.
-        uriBuilder.addParameter(FAVORITE_ACTORS, null);
-        uriBuilder.addParameter(PRIMARY_RELEASE_YEAR, primaryReleaseYear);
+
+        if(favoriteActors != null && !favoriteActors.isEmpty()) {
+            uriBuilder.addParameter(FAVORITE_ACTORS, joinIdsToString(favoriteActors));
+        }
+
+        if(primaryReleaseYear != null) {
+            uriBuilder.addParameter(PRIMARY_RELEASE_YEAR, primaryReleaseYear);
+        }
         return uriBuilder.build().toString();
     }
+
+    private String joinIdsToString(List<Integer> ids) {
+        StringJoiner stringJoiner = new StringJoiner(",");
+        ids.forEach(it -> stringJoiner.add(String.valueOf(it)));
+        return stringJoiner.toString();
+    }
+
+
 }

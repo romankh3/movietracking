@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
         UserModel userModel = toUserModel(userEntity);
 
-        emailService.sendEmail(userModel.getSecretKey());
+        emailService.sendEmail(userModel);
 
         return userModelRepository.save(userModel);
     }

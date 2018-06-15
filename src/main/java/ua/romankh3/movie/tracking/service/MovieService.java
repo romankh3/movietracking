@@ -5,11 +5,7 @@ import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.MovieEntity;
 import ua.romankh3.movie.tracking.rest.entity.WatchedMovieEntity;
 
-import java.io.IOException;
-
 public interface MovieService {
-
-    String retrievePopularMovies(String path) throws IOException;
 
     MovieModel createMovieModel(final MovieEntity movieEntity);
 
@@ -17,5 +13,5 @@ public interface MovieService {
 
     void markMovieAsUnWatched(final WatchedMovieEntity watchedMovieEntity) throws NotFoundException;
 
-    String retrieveMoviesByFavoriteActors(Integer userId);
+    String retrieveMoviesByFavoriteActors(Integer userId) throws NotFoundException;
 }

@@ -1,6 +1,7 @@
 package ua.romankh3.movie.tracking.service;
 
-public interface EmailService {
+import ua.romankh3.movie.tracking.db.model.UserModel;
 
-    void sendEmail(String secretKey);
+public interface EmailService {
+    void sendEmail(final UserModel userModel);
 }

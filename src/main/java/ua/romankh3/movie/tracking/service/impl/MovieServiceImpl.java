@@ -2,11 +2,9 @@ package ua.romankh3.movie.tracking.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.romankh3.movie.tracking.db.model.MovieModel;
-import ua.romankh3.movie.tracking.db.model.UserModel;
-import ua.romankh3.movie.tracking.db.model.User_x_MovieModel;
-import ua.romankh3.movie.tracking.db.model.User_x_MoviePK;
+import ua.romankh3.movie.tracking.db.model.*;
 import ua.romankh3.movie.tracking.db.repository.MovieModelRepository;
+import ua.romankh3.movie.tracking.db.repository.User_x_ActorModelRepository;
 import ua.romankh3.movie.tracking.db.repository.User_x_MovieModelRepository;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.MovieEntity;
@@ -15,8 +13,9 @@ import ua.romankh3.movie.tracking.service.MovieService;
 import ua.romankh3.movie.tracking.service.TmdbAPIService;
 import ua.romankh3.movie.tracking.service.UserService;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -34,12 +33,10 @@ public class MovieServiceImpl implements MovieService {
     private User_x_MovieModelRepository user_x_movieModelRepository;
 
     @Autowired
-    private TmdbAPIService tmdbAPIService;
+    private User_x_ActorModelRepository user_x_actorModelRepository;
 
-    @Override
-    public String retrievePopularMovies(String path) throws IOException {
-        return tmdbAPIService.retrieveMovies(path);
-    }
+    @Autowired
+    private TmdbAPIService tmdbAPIService;
 
     @Override
     public MovieModel createMovieModel(final MovieEntity movieEntity) {
@@ -57,8 +54,17 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public String retrieveMoviesByFavoriteActors(Integer userId) {
-        return null;
+    public String retrieveMoviesByFavoriteActors(Integer userId) throws NotFoundException {
+        UserModel userModel = userService.retrieveExistingEntity(userId);
+        List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
+        List<Integer> actorIds = user_x_actorModels.stream()
+                                                   .map(it -> it.getId().getActor_id())
+                                                   .collect(Collectors.toList());
+        return retrieveMoviesByActorIdIn(actorIds);
+    }
+
+    private String retrieveMoviesByActorIdIn(List<Integer> actorIds) {
+        return tmdbAPIService.retrieveMovies(actorIds);
     }
 
     private void markMovie(final WatchedMovieEntity watchedMovieEntity, boolean isWatched) throws NotFoundException {
