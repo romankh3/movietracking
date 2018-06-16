@@ -36,9 +36,9 @@ public class MovieController {
         return movieService.retrieveMoviesByFavoriteActors(userId);
     }
 
-    @GetMapping("/{user_id}/{primary_release_year}")
+    @GetMapping("/{user_id}/{year}/")
     public List<MovieTMDB> getUnwatchedMoviesWithFavoriteActorsWithYear(@PathVariable("user_id") Integer userId,
-                                                                            @PathVariable("year") Integer year) throws NotFoundException {
+                                                                        @PathVariable("year") Integer year) throws NotFoundException {
 
         return movieService.retrieveMoviesByActorsAndReleaseYear(userId, year);
     }
