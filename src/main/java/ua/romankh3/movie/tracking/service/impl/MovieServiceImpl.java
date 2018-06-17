@@ -7,13 +7,16 @@ import ua.romankh3.movie.tracking.db.repository.MovieModelRepository;
 import ua.romankh3.movie.tracking.db.repository.User_x_ActorModelRepository;
 import ua.romankh3.movie.tracking.db.repository.User_x_MovieModelRepository;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
+import ua.romankh3.movie.tracking.exception.ValidationException;
 import ua.romankh3.movie.tracking.mapper.MovieTMDB;
 import ua.romankh3.movie.tracking.rest.entity.MovieEntity;
 import ua.romankh3.movie.tracking.rest.entity.WatchedMovieEntity;
 import ua.romankh3.movie.tracking.service.MovieService;
 import ua.romankh3.movie.tracking.service.TmdbAPIService;
 import ua.romankh3.movie.tracking.service.UserService;
+import ua.romankh3.movie.tracking.service.ValidationService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +41,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private TmdbAPIService tmdbAPIService;
+
+    @Autowired
+    private ValidationService validationService;
 
     @Override
     public MovieModel createMovieModel(final MovieEntity movieEntity) {
@@ -68,20 +74,30 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieTMDB> retrieveMoviesByActorsAndReleaseYear(Integer userId, Integer year) throws NotFoundException {
+    public List<MovieTMDB> retrieveMoviesByActorsAndReleaseYear(Integer userId, Integer year) throws NotFoundException, ValidationException {
+        validationService.validateYear(year);
+
         UserModel userModel = userService.retrieveExistingEntity(userId);
-        List<Integer> watchedMovieIds = retrieveWatchedMovieIds(userModel);
         List<Integer> actorIds = retrieveFavoriteActorIds(userModel);
 
-        return tmdbAPIService.retrieveMovies(year, actorIds).stream()
-                                                            .filter(it -> !watchedMovieIds.contains(it.getId()))
-                                                            .collect(Collectors.toList());
+        return filterOnlyUnwatchedMovies(tmdbAPIService.retrieveMovies(year, actorIds), userModel);
     }
 
-    private List<Integer> retrieveFavoriteActorIds(final UserModel userModel) {
-        List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
-        return user_x_actorModels.stream()
-                .map(it -> it.getActorModel().getTmdbId())
+    @Override
+    public List<MovieTMDB> retrieveMoviesByActorsAndReleaseMonth(Integer userId, Integer year, Integer month) throws NotFoundException, ValidationException, IOException {
+        validationService.validateYear(year);
+        validationService.validateMonth(month);
+
+        UserModel userModel = userService.retrieveExistingEntity(userId);
+        List<Integer> actorIds = retrieveFavoriteActorIds(userModel);
+
+        return filterOnlyUnwatchedMovies(tmdbAPIService.retrieveMovies(year, month, actorIds), userModel);
+    }
+
+    private List<MovieTMDB> filterOnlyUnwatchedMovies(List<MovieTMDB> movieTMDBS, UserModel userModel) {
+        List<Integer> watchedMovieIds = retrieveWatchedMovieIds(userModel);
+        return movieTMDBS.stream()
+                .filter(it -> !watchedMovieIds.contains(it.getId()))
                 .collect(Collectors.toList());
     }
 
@@ -90,6 +106,13 @@ public class MovieServiceImpl implements MovieService {
                 .stream()
                 .filter(User_x_MovieModel::getWatched)
                 .map(it -> it.getMovieModel().getTmdbId())
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> retrieveFavoriteActorIds(final UserModel userModel) {
+        List<User_x_ActorModel> user_x_actorModels = user_x_actorModelRepository.findByUserModel(userModel);
+        return user_x_actorModels.stream()
+                .map(it -> it.getActorModel().getTmdbId())
                 .collect(Collectors.toList());
     }
 

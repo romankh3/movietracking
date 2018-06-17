@@ -8,7 +8,7 @@ Simple API for tracking new movies with favorite actors. For movie and actor inf
 * Remove favorite actor - <b>DONE</b>
 * Mark movie watched - <b>DONE</b>
 * Search unwatched movies with favorite actors - <b>DONE</b>
-* Search by month and year unviewed movies with favorite actors - <b>IN PROCESS</b>
+* Search by month and year unviewed movies with favorite actors - <b>DONE</b>
 
 
 #### Nice to Have:
@@ -63,6 +63,12 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
  
 #### Get Unwatched movies for User with id=0 with favorites actors.
 curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0'
+
+#### Get Unwatched movies for User with id=0 with favorites actors for 1999 year.
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0/1999'
+
+#### Get Unwatched movies for User with id=0 with favorites actors for 1999 year and 12 month.
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0/1999/12'
  
 #### Set movie with id = 550 as unwatched:
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 

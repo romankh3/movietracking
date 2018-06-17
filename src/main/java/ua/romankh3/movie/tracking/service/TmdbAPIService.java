@@ -14,4 +14,8 @@ public interface TmdbAPIService {
     List<MovieTMDB> retrieveMovies(List<Integer> favoriteActorIds);
 
     List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear, List<Integer> favoriteActorIds);
+
+    List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear,
+                                   Integer month,
+                                   List<Integer> favoriteActorIds);
 }
