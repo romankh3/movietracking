@@ -21,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping
-    public Integer createUser(@RequestBody @Valid UserEntity userEntity) throws Exception {
-        return userService.createUser(userEntity).getId();
+    public UserEntity createUser(@RequestBody @Valid UserEntity userEntity) throws Exception {
+        return userService.createUser(userEntity);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

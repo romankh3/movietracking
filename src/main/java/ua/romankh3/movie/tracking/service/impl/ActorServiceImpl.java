@@ -16,6 +16,7 @@ import ua.romankh3.movie.tracking.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -26,31 +27,30 @@ public class ActorServiceImpl implements ActorService {
     @Autowired
     private User_x_ActorModelRepository user_x_actorModelRepository;
 
+    private static final boolean FAVORITE = true;
+    private static final boolean UN_FAVORITE = false;
+
     @Autowired
     private UserService userService;
 
     @Override
-    public List<ActorModel> retrieveByUserId(final UserModel userModel) throws NotFoundException {
-        // TODO: 15.06.2018 Implement it
-        return null;
-    }
-
-    @Override
-    public void addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+    public ActorEntity addFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
         UserModel userModel = userService.retrieveExistingEntity(favoriteActorEntity.getUser_id());
         Optional<ActorModel> actorModelOptional = actorModelRepository.findByTmdbId(favoriteActorEntity.getActor_id());
         ActorModel actorModel = actorModelOptional.orElseGet(() -> createActor(favoriteActorEntity));
 
-        user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(), actorModel.getId(), true));
+        return toEntity(user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(),
+                                                         actorModel.getId(),
+                                                         FAVORITE)).getActorModel());
     }
 
     @Override
-    public void removeFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
+    public ActorEntity removeFavoriteActor(final FavoriteActorEntity favoriteActorEntity) throws NotFoundException {
         UserModel userModel = userService.retrieveExistingEntity(favoriteActorEntity.getUser_id());
         Optional<ActorModel> actorModelOptional = actorModelRepository.findById(favoriteActorEntity.getActor_id());
-        user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(),
-                                         actorModelOptional.get().getId(),
-                                         false));
+        return toEntity(user_x_actorModelRepository.save(fillUser_x_Actor(userModel.getId(),
+                actorModelOptional.get().getId(),
+                UN_FAVORITE)).getActorModel());
     }
 
     private User_x_ActorModel fillUser_x_Actor(Integer userId, Integer actorId, boolean favorite) {
@@ -65,16 +65,26 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public ActorModel createActor(ActorEntity actorEntity) {
-        return actorModelRepository.save(convertEntityToModel(actorEntity));
+        return actorModelRepository.save(toModel(actorEntity));
     }
 
-    private ActorModel convertEntityToModel(final ActorEntity actorEntity) {
+    @Override
+    public List<ActorEntity> findByUserId(Integer userId) throws NotFoundException {
+        UserModel userModel = userService.retrieveExistingEntity(userId);
+
+        return user_x_actorModelRepository.findByUserModel(userModel).stream()
+                .map(User_x_ActorModel::getActorModel)
+                .map(this::toEntity)
+                .collect(Collectors.toList());
+    }
+
+    private ActorModel toModel(final ActorEntity actorEntity) {
         ActorModel actorModel = new ActorModel();
         actorModel.setTmdbId(actorEntity.getActor_id());
         return actorModel;
     }
 
-    private ActorEntity convertModelToEntity(ActorModel model) {
+    private ActorEntity toEntity(ActorModel model) {
         ActorEntity entity = new ActorEntity();
         entity.setActor_id(model.getTmdbId());
         return entity;

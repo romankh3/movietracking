@@ -28,16 +28,14 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
 
     @Override
-    public UserModel createUser(UserEntity userEntity) throws Exception {
-
-        //todo try to implement it in AOP.
+    public UserEntity createUser(UserEntity userEntity) throws Exception {
         validationService.validateUser(userEntity);
 
         UserModel userModel = toUserModel(userEntity);
 
         emailService.sendEmail(userModel);
 
-        return userModelRepository.save(userModel);
+        return toUserEntity(userModelRepository.save(userModel));
     }
 
     @Override
@@ -66,7 +64,6 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setFirstName(userModel.getFirstName());
         userEntity.setLastName(userModel.getLastName());
-        userEntity.setPassword(userModel.getPassword());
         userEntity.setEmail(userModel.getEmail());
         return userEntity;
     }

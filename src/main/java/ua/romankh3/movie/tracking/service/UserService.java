@@ -10,7 +10,7 @@ public interface UserService {
 
     List<UserEntity> findAll();
 
-    UserModel createUser(final UserEntity userEntity) throws Exception;
+    UserEntity createUser(final UserEntity userEntity) throws Exception;
 
     void delete(final Integer id);
 
