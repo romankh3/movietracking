@@ -24,7 +24,6 @@ sourceCompatibility = 1.8
 repositories {
 	mavenCentral()
 	mavenLocal()
-	flatDir { dirs "lib" }
 }
 
 dependencies {
@@ -35,20 +34,6 @@ dependencies {
 
 	runtime 'org.hsqldb:hsqldb'
 }
-
-version = '1.0.1'
-
-task fatJar(type: Jar) {
-	manifest {
-		attributes 'Implementation-Title': 'Movie Tracking',
-				'Implementation-Version': version,
-				'Main-Class': 'ua.romankh3.movie.tracking.Application'
-	}
-	baseName = project.name + '-all'
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-	with jar
-}
-
 
 defaultTasks << 'clean'
 defaultTasks << 'build'
