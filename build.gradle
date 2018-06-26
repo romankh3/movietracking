@@ -3,7 +3,7 @@ buildscript {
 		springBootVersion = '2.0.2.RELEASE'
 	}
 	repositories {
-		mavenCentral()
+		jcenter()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -18,12 +18,17 @@ apply from: 'gradle/spring-boot.gradle'
 apply from: 'gradle/swagger.gradle'
 
 group = 'ua.romankh3.movie.tracking'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+	jcenter()
 	mavenCentral()
 	mavenLocal()
+}
+
+bootJar {
+	launchScript()
 }
 
 dependencies {
