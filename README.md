@@ -1,6 +1,7 @@
-# Movie Tracking
+![logotype](https://user-images.githubusercontent.com/16310793/42381795-e2b82558-813a-11e8-99fa-09ac013d5a3e.png)
 
-Simple API for tracking new movies with favorite actors. For movie and actor information using https://www.themoviedb.org/documentation/api 
+
+Simple API for tracking movies with favorite actors. For movie and actor information using https://www.themoviedb.org/documentation/api 
 
 #### API works with next requests:
 * Register new user - <b>DONE</b>
@@ -78,3 +79,5 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
  
 #### Delete User:
  curl -X DELETE http://localhost:8080/user/{user_id}
+
+### Thanks [@dee-y](https://github.com/dee-y) for designing this logo!
