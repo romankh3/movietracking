@@ -1,0 +1,13 @@
+language: java
+
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
+script: ./gradlew clean build jacocoTestReport
+
+jdk: oraclejdk8
+
+# Add it after.
+#after_success:
+#- ./gradlew jacocoTestReport coveralls
