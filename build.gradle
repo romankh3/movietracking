@@ -27,10 +27,6 @@ repositories {
 	mavenLocal()
 }
 
-bootJar {
-	launchScript()
-}
-
 dependencies {
 	compile 'com.mashape.unirest:unirest-java:1.4.9'
 	compile 'org.jsoup:jsoup:1.7.2'
