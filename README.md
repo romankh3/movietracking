@@ -26,7 +26,7 @@ $ ./run.sh
 # Rest API:
 
 run application and go to Swagger UI.
-http://localhost:8080/swagger-ui.html
+http://localhost:5000/swagger-ui.html
 
 # Steps to reproduce API.
 
@@ -36,48 +36,48 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
    "firstName": "Roman", \ 
    "lastName": "Kh3", \ 
    "password": "yoBro" \ 
- }' 'http://localhost:8080/user'
+ }' 'http://localhost:5000/user'
 
 #### Show All users:
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/user'
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/user'
 
 #### Add favorite actors (id: 287, 819) for User which was created above.
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
    "actor_id": 287, \ 
    "user_id": 0 \ 
- }' 'http://localhost:8080/actor'
+ }' 'http://localhost:5000/actor'
  
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
    "actor_id": 819, \ 
    "user_id": 0 \ 
- }' 'http://localhost:8080/actor'
+ }' 'http://localhost:5000/actor'
  
 #### Get Unwatched movies for User with id=0 with favorites actors.
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0'
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/movie/0'
 
 
 #### Set movie with id = 550 as watched:
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
    "movie_id": 550, \ 
    "user_id": 0 \ 
- }' 'http://localhost:8080/movie/watched'
+ }' 'http://localhost:5000/movie/watched'
  
 #### Get Unwatched movies for User with id=0 with favorites actors.
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0'
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/movie/0'
 
 #### Get Unwatched movies for User with id=0 with favorites actors for 1999 year.
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0/1999'
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/movie/0/1999'
 
 #### Get Unwatched movies for User with id=0 with favorites actors for 1999 year and 12 month.
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/movie/0/1999/12'
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/movie/0/1999/12'
  
 #### Set movie with id = 550 as unwatched:
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ \ 
    "movie_id": 500, \ 
    "user_id": 0 \ 
- }' 'http://localhost:8080/movie/unwatched'
+ }' 'http://localhost:5000/movie/unwatched'
  
 #### Delete User:
- curl -X DELETE http://localhost:8080/user/{user_id}
+ curl -X DELETE http://localhost:5000/user/{user_id}
 
 ### Thanks [@dee-y](https://github.com/dee-y) for designing this logo!
