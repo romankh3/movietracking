@@ -1,7 +1,6 @@
 package ua.romankh3.movie.tracking.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.romankh3.movie.tracking.exception.NotFoundException;
 import ua.romankh3.movie.tracking.rest.entity.ActorEntity;
@@ -12,7 +11,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Controller
 @RequestMapping("/actor")
 public class ActorController {
 
