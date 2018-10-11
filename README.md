@@ -1,4 +1,5 @@
 ![logotype](https://user-images.githubusercontent.com/16310793/42381795-e2b82558-813a-11e8-99fa-09ac013d5a3e.png)
+[![Build Status](https://travis-ci.org/romankh3/movietracking.svg?branch=master)](https://travis-ci.org/romankh3/movietracking)
 
 
 Simple API for tracking movies with favorite actors. For movie and actor information using https://www.themoviedb.org/documentation/api 
