@@ -27,7 +27,7 @@ phases:
     commands:
       - echo Build started on `date`
       - chmod +x gradlew
-      - ./gradlew jacocoTestReport
+      - ./gradlew
 #    finally:
 #      - command
 #      - command
