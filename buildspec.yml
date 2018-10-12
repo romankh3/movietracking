@@ -40,7 +40,7 @@ phases:
 #      - command
 artifacts:
   files:
-    - build/libs/movietracking-1.0.1.jar
+    - */**
 #    - location
 #    - name
 #  discard-paths: yes
