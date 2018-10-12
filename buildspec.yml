@@ -44,7 +44,7 @@ artifacts:
 #    - location
 #    - name
 #  discard-paths: yes
-#  base-directory: location
+   base-directory: 'build/libs'
 #  secondary-artifacts:
 #    artifactIdentifier:
 #      files:
