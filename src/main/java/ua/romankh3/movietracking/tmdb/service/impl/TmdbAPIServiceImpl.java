@@ -116,16 +116,15 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     }
 
     static class TMDBConstants {
-        static final String API_KEY = "api_key";
-        static final String LANGUAGE = "language";
-        static final String NOW_PLAYING_MOVIE = "/movie/now_playing";
-        static final String PRIMARY_RELEASE_YEAR = "primary_release_year";
-        static final String PRIMARY_RELEASE_DATE_GTE = "primary_release_date.gte";
-        static final String PRIMARY_RELEASE_DATE_LTE = "primary_release_date.lte";
-        static final String FAVORITE_ACTORS = "with_people";
-        static final String DISCOVER_MOVIE = "/discover/movie";
-        static final String DISCOVER_ACTOR = "/discover/actor";
-        static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-M-d");
+        public static final String API_KEY = "api_key";
+        public static final String LANGUAGE = "language";
+        public static final String NOW_PLAYING_MOVIE = "/movie/now_playing";
+        public static final String PRIMARY_RELEASE_YEAR = "primary_release_year";
+        public static final String PRIMARY_RELEASE_DATE_GTE = "primary_release_date.gte";
+        public static final String PRIMARY_RELEASE_DATE_LTE = "primary_release_date.lte";
+        public static final String FAVORITE_ACTORS = "with_people";
+        public static final String DISCOVER_MOVIE = "/discover/movie";
+        public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-M-d");
     }
 
 }
