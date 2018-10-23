@@ -18,32 +18,33 @@ phases:
 #      - command
   pre_build:
     commands:
-      - 'export DISPLAY=:99.0'
-      - 'sh -e /etc/init.d/xvfb start'
+#      - command
+#      - command
 #    finally:
 #      - command
 #      - command
   build:
     commands:
-      - './gradlew clean build jacocoTestReport'
+      - echo Build started on `date`
+      - chmod +x gradlew
+      - ./gradlew
+#    finally:
+#      - command
+#      - command
+  post_build:
+    commands:
+      - echo Build completed on `date`
 #      - command
 #    finally:
 #      - command
 #      - command
-#  post_build:
-#    commands:
-#      - command
-#      - command
-#    finally:
-#      - command
-#      - command
-#artifacts:
-#  files:
-#    - location
+artifacts:
+  files:
+    - */**
 #    - location
 #    - name
 #  discard-paths: yes
-#  base-directory: location
+#   base-directory: build/libs
 #  secondary-artifacts:
 #    artifactIdentifier:
 #      files:
