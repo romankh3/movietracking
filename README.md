@@ -1,4 +1,5 @@
 ![logotype](https://user-images.githubusercontent.com/16310793/42381795-e2b82558-813a-11e8-99fa-09ac013d5a3e.png)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b9dc9938dcf6423693d21bb5c8c4ea68)](https://app.codacy.com/app/romankh3/movietracking?utm_source=github.com&utm_medium=referral&utm_content=romankh3/movietracking&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/romankh3/movietracking.svg?branch=master)](https://travis-ci.org/romankh3/movietracking)
 
 
