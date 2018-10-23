@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.5.RELEASE'
+		springBootVersion = '2.0.6.RELEASE'
 	}
 	repositories {
 		jcenter()
@@ -42,10 +42,13 @@ dependencies {
 	compile 'org.jsoup:jsoup:1.7.2'
 	compile 'org.apache.commons:commons-lang3:3.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+	compile 'org.projectlombok:lombok'
+
+
 
 	testCompile("junit:junit")
 
-	runtime 'org.hsqldb:hsqldb'
+	runtime 'mysql:mysql-connector-java'
 }
 
 defaultTasks << 'clean'
