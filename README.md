@@ -4,6 +4,8 @@
 
 Simple API for tracking movies with favorite actors. For movie and actor information using https://www.themoviedb.org/documentation/api 
 
+Tmdb documentation: https://developers.themoviedb.org/3/
+
 #### API works with next requests:
 * Register new user - <b>DONE</b>
 * Add favorite actor - <b>DONE</b>
