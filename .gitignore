@@ -20,3 +20,6 @@
 build/*
 out/*
 target/*
+
+*.class
+*.classpath
