@@ -1,11 +1,8 @@
 package ua.romankh3.movietracking.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-@Data
 @Entity
 @Table(name = "actor")
 public class Actor {
@@ -28,4 +25,44 @@ public class Actor {
 
     @Column(name = "thdbId")
     private Integer thdbId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Integer getThdbId() {
+        return thdbId;
+    }
+
+    public void setThdbId(Integer thdbId) {
+        this.thdbId = thdbId;
+    }
 }
