@@ -12,19 +12,26 @@ public class Actor {
     @Column(name = "actor_id")
     private int id;
 
-    @Column(name = "first_name")
+    @Column(name = "full_name")
     @NotEmpty(message = "*Please provide your name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    @NotEmpty(message = "*Please provide your last name")
-    private String lastName;
+    private String fullName;
 
     @Column(name = "active")
     private int active;
 
     @Column(name = "thdbId")
     private Integer thdbId;
+
+    @Column(name = "picture_path")
+    private String picturePath;
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
 
     public int getId() {
         return id;
@@ -34,20 +41,12 @@ public class Actor {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public int getActive() {

@@ -10,6 +10,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ua.romankh3.movietracking.tmdb.model.ActorCastTMDB;
 import ua.romankh3.movietracking.tmdb.model.MovieTMDB;
 import ua.romankh3.movietracking.tmdb.service.TmdbAPIService;
 
@@ -81,6 +82,37 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<ActorCastTMDB> findCastByMovie(String path) {
+        try {
+            String url = createDefaultTmdbUrlBuiler(path);
+            HttpResponse<JsonNode> jsonResponse = Unirest.get(url).asJson();
+
+            if(jsonResponse.getStatus() != HttpStatus.SC_OK) {
+                return null;
+            }
+            String jsonList = jsonResponse.getBody().getObject().get("cast").toString();
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<ActorCastTMDB> actorTMDBS = objectMapper.readValue(jsonList, new TypeReference<List<ActorCastTMDB>>(){} );
+
+            return actorTMDBS;
+        } catch (UnirestException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String createDefaultTmdbUrlBuiler(String path) {
+        try {
+            URIBuilder uriBuilder = new URIBuilder(tmdbApiBaseUrl + path);
+            uriBuilder.addParameter(LANGUAGE, tmdbLanguage);
+            uriBuilder.addParameter(API_KEY, tmdbApiKey);
+            return uriBuilder.build().toString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

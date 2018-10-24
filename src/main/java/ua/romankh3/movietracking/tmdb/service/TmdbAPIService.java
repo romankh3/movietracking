@@ -1,5 +1,6 @@
 package ua.romankh3.movietracking.tmdb.service;
 
+import ua.romankh3.movietracking.tmdb.model.ActorCastTMDB;
 import ua.romankh3.movietracking.tmdb.model.MovieTMDB;
 
 import java.io.IOException;
@@ -18,4 +19,6 @@ public interface TmdbAPIService {
     List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear,
                                    Integer month,
                                    List<Integer> favoriteActorIds);
+
+    List<ActorCastTMDB> findCastByMovie(String path);
 }

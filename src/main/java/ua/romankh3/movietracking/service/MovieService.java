@@ -4,7 +4,7 @@ import ua.romankh3.movietracking.model.Movie;
 
 public interface MovieService {
 
-    Movie createMovie(Movie movie);
+    Movie createMovie(Integer thmbMovieId);
 
     void markMovieAsWatched(Integer movieId);
     void markMovieAsUnwatched(Integer movieId);

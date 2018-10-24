@@ -1,7 +1,8 @@
 package ua.romankh3.movietracking.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Movie")
@@ -16,8 +17,8 @@ public class Movie {
     private Integer tmdbId;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "movie_user", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
-    private Set<Actor> actors;
+    @JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private List<Actor> actors = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -35,11 +36,11 @@ public class Movie {
         this.tmdbId = tmdbId;
     }
 
-    public Set<Actor> getActors() {
+    public List<Actor> getActors() {
         return actors;
     }
 
-    public void setActors(Set<Actor> actors) {
+    public void setActors(List<Actor> actors) {
         this.actors = actors;
     }
 }
