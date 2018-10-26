@@ -7,4 +7,6 @@ import java.util.List;
 public interface MovieTmbdService {
 
     List<MovieTMDB> findNowPlaying();
+
+    MovieTMDB findById(Integer id);
 }

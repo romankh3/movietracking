@@ -17,9 +17,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static ua.romankh3.movietracking.tmdb.service.impl.TmdbAPIServiceImpl.TMDBConstants.API_KEY;
-import static ua.romankh3.movietracking.tmdb.service.impl.TmdbAPIServiceImpl.TMDBConstants.LANGUAGE;
-import static ua.romankh3.movietracking.tmdb.service.impl.TmdbAPIServiceImpl.TMDBConstants.NOW_PLAYING_MOVIE;
+import static ua.romankh3.movietracking.tmdb.service.impl.TmdbAPIServiceImpl.TMDBConstants.*;
 
 @Service
 public class MovieTmdbServiceImpl implements MovieTmbdService {
@@ -47,6 +45,26 @@ public class MovieTmdbServiceImpl implements MovieTmbdService {
             List<MovieTMDB> movieTMDBList = objectMapper.readValue(jsonList, new TypeReference<List<MovieTMDB>>(){} );
 
             return movieTMDBList;
+        } catch (URISyntaxException | UnirestException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public MovieTMDB findById(Integer id) {
+        try {
+            String uriBuilder = createTmdbUrl(FIND_MOVIE_BY_ID + "/" + id);
+            HttpResponse<JsonNode> jsonResponse = Unirest.get(uriBuilder).asJson();
+
+            if(jsonResponse.getStatus() != HttpStatus.SC_OK) {
+                return null;
+            }
+            String jsonObject = jsonResponse.getBody().getObject().toString();
+            ObjectMapper objectMapper = new ObjectMapper();
+            MovieTMDB movieTMDB = objectMapper.readValue(jsonObject, MovieTMDB.class);
+            return movieTMDB;
+
         } catch (URISyntaxException | UnirestException | IOException e) {
             e.printStackTrace();
             return null;

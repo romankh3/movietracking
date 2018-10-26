@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validateForm() {
+            //alert('Validating form...');
+            var text = ${movie.id};
+            location.href = 'test.html?param=' + text;
+            return false;
+        }
+    </script>
 </head>
 
 <body>
@@ -47,12 +55,15 @@
                     </thead>
                     <tbody>
                     <tr th:each="movie: ${movies}" class="border_bottom">
-                        <td><img th:src="${pathToImage}+${movie.posterPath}" th:height="300" th:width="200" alt="Poster Path"/></td>
+                        <td >
+                            <a th:href="@{/user/movie} + '/' + ${movie.id}" th:method="get">
+                                <img th:src="${pathToImage}+${movie.posterPath}" th:height="300" th:width="200" alt="Poster Path"/>
+                            </a>
+                        </td>
                         <td th:text="${movie.originalTitle}"/>
                         <td th:text="${movie.adult}"/>
                         <td th:text="${movie.genreIds.toString()}"/>
                         <td th:text="${movie.overview}"/>
-                    </tr>
                     </tbody>
 
                 </table>

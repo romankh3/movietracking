@@ -156,6 +156,7 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
         public static final String PRIMARY_RELEASE_DATE_LTE = "primary_release_date.lte";
         public static final String FAVORITE_ACTORS = "with_people";
         public static final String DISCOVER_MOVIE = "/discover/movie";
+        public static final String FIND_MOVIE_BY_ID = "/movie";
         public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-M-d");
     }
 
