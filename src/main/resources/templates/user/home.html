@@ -36,8 +36,16 @@
             </div>
             <p class="admin-message-text text-center" th:utext="${userMessage}"></p>
             <div class="panel-body">
-                <table border="1">
+                <table border="1" class="table table-striped">
+                    <tr class="border_bottom">
+                        <td><b>Poster</b></td>
+                        <td><b>Name</b></td>
+                        <td><b>Adult</b></td>
+                        <td><b>Genres Ids</b></td>
+                        <td><b>Overview</b></td>
+                    </tr>
                     <tr th:each="movie: ${movies}" class="border_bottom">
+                        <td><img th:src="${pathToImage}+${movie.posterPath}" th:height="200" th:width="100" alt="Poster Path"/></td>
                         <td th:text="${movie.originalTitle}"/>
                         <td th:text="${movie.adult}"/>
                         <td th:text="${movie.genreIds.toString()}"/>

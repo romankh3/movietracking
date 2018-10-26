@@ -21,6 +21,8 @@ public class UserController {
     @Autowired
     private MovieTmbdService movieTmbdService;
 
+    private final String pathToImage = "https://image.tmdb.org/t/p/original";
+
     @RequestMapping(value = "/user/home", method = RequestMethod.GET)
     public ModelAndView home() {
 
@@ -30,9 +32,10 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/home");
-        modelAndView.addObject("userMessage", "This is your place, where you can explore Movies!");
+        modelAndView.addObject("userMessage", "There are the newest movies on a market");
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("movies", newestMovies);
+        modelAndView.addObject("pathToImage", pathToImage);
         return modelAndView;
     }
 
