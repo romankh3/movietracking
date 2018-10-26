@@ -49,6 +49,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("movie", movieTMDB);
         modelAndView.addObject("newestMovies", "Explore Movies");
+        modelAndView.setViewName("/user/movie");
 
         return modelAndView;
     }
