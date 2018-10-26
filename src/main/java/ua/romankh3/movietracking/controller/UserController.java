@@ -32,7 +32,7 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/home");
-        modelAndView.addObject("userMessage", "There are the newest movies on a market");
+        modelAndView.addObject("userMessage", "The newest movies");
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("movies", newestMovies);
         modelAndView.addObject("pathToImage", pathToImage);
@@ -42,6 +42,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/movies", method = RequestMethod.GET)
     public ModelAndView movies() {
+        // todo added searching by movie.
         User user = authenticationService.getAuthenticationUser();
         List<MovieTMDB> newestMovies = movieTmbdService.findNowPlaying();
         ModelAndView modelAndView = new ModelAndView();
