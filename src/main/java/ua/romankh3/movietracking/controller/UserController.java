@@ -27,11 +27,24 @@ public class UserController {
         User user = authenticationService.getAuthenticationUser();
         List<MovieTMDB> newestMovies = movieTmbdService.findNowPlaying();
 
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/home");
         modelAndView.addObject("userMessage", "This is your place, where you can explore Movies!");
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("newestMovies", newestMovies);
+        modelAndView.addObject("movies", newestMovies);
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/user/movies", method = RequestMethod.GET)
+    public ModelAndView movies() {
+        User user = authenticationService.getAuthenticationUser();
+        List<MovieTMDB> newestMovies = movieTmbdService.findNowPlaying();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("newestMovies", "Explore Movies");
+        modelAndView.addObject("movies", newestMovies);
+
         return modelAndView;
     }
 }

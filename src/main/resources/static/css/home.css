@@ -3,3 +3,8 @@
     font-size: 22px;
     color: #004080;
 }
+
+tr.border_bottom td {
+    border-bottom:1pt solid black;
+    border-collapse: separate;
+}

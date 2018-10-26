@@ -14,9 +14,9 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/logout}" method="get">
+    <form th:action="@{/user/home}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Logout
+                type="Submit">Home Page
         </button>
     </form>
 
@@ -25,25 +25,15 @@
             <div class="panel-heading">
                 <span th:utext="${userName}"></span>
             </div>
-            <form th:action="@{/user/movies}" method="get">
-                <button class="btn btn-md btn-danger btn-block" name="registration"
-                        type="Submit">Explore movies
-                </button>
-            </form>
             <div class="panel-body">
                 <img th:src="@{/images/logotype_wb.png}" class="img-responsive center-block"
                      th:height="400" th:width="400" alt="Beer"/>
             </div>
             <p class="admin-message-text text-center" th:utext="${userMessage}"></p>
             <div class="panel-body">
-                <table border="1">
-                    <tr th:each="movie: ${movies}" class="border_bottom">
-                        <td th:text="${movie.originalTitle}"/>
-                        <td th:text="${movie.adult}"/>
-                        <td th:text="${movie.genreIds.toString()}"/>
-                        <td th:text="${movie.overview}"/>
-                    </tr>
-                </table>
+                #
+                # Here should be list with movies.
+                #
             </div>
         </div>
 
