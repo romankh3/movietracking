@@ -3,3 +3,7 @@
 build/*
 out/*
 target/*
+/bin/
+*.classpath
+*.project
+*.iml
