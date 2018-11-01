@@ -13,9 +13,14 @@
 <body>
 <div class="container">
 
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Logout
+        </button>
+    </form>
     <form th:action="@{/user/home}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Home Page
+                type="Submit">Back
         </button>
     </form>
 
@@ -34,6 +39,23 @@
                         <td>
                             <h2 th:text="${movie.title}">Movie Title</h2>
                             <p th:text="${movie.overview}">Overview</p>
+                            <table border="1" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Poster</th>
+                                    <th>Name</th>
+                                    <th>Set As favorite</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="actor: ${actors}">
+                                    <td >
+                                        <img th:src="${pathToImage}+${actor.picturePath}" th:height="200" th:width="200" alt="Poster Path"/>
+                                    </td>
+                                    <td th:text="${actor.fullName}"/>
+                                </tbody>
+
+                            </table>
                         </td>
                     </tr>
                 </table>

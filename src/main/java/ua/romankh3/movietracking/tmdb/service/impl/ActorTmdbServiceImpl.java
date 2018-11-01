@@ -15,6 +15,8 @@ public class ActorTmdbServiceImpl implements ActorTmdbService {
 
     private TmdbAPIService tmdbAPIService;
 
+    private final String pathToImage = "https://image.tmdb.org/t/p/original";
+
     @Autowired
     public ActorTmdbServiceImpl(TmdbAPIService tmdbAPIService) {
         this.tmdbAPIService = tmdbAPIService;
@@ -32,6 +34,12 @@ public class ActorTmdbServiceImpl implements ActorTmdbService {
         actor.setActive(1);
         actor.setFullName(castTMDB.getFullActorName());
         actor.setThdbId(castTMDB.getActorId());
+        if(castTMDB.getProfilePath() != null) {
+            actor.setPicturePath(castTMDB.getProfilePath());
+        } else {
+            actor.setPicturePath("/images/no-image-avaliable.jpg");
+        }
+
         actor.setPicturePath(castTMDB.getProfilePath());
         return actor;
     }

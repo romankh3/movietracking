@@ -9,14 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        function validateForm() {
-            //alert('Validating form...');
-            var text = ${movie.id};
-            location.href = 'test.html?param=' + text;
-            return false;
-        }
-    </script>
 </head>
 
 <body>
@@ -38,9 +30,6 @@
                         type="Submit">Explore your movies
                 </button>
             </form>
-            <div class="panel-body">
-                <img th:src="@{/images/logotype_wb.png}" class="img-responsive center-block" alt="Beer"/>
-            </div>
             <div class="panel-body">
                 <h2 th:utext="${userMessage}">The newest movies</h2>
                 <table border="1" class="table table-striped">

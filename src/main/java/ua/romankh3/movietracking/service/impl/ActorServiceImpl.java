@@ -7,6 +7,9 @@ import ua.romankh3.movietracking.model.User;
 import ua.romankh3.movietracking.repository.UserRepository;
 import ua.romankh3.movietracking.service.ActorService;
 import ua.romankh3.movietracking.service.UserService;
+import ua.romankh3.movietracking.tmdb.model.ActorTMDB;
+
+import java.util.List;
 
 @Service
 public class ActorServiceImpl implements ActorService {
