@@ -51,7 +51,7 @@
                                 <tr th:each="actor: ${actors}">
                                     <td >
                                         <a th:href="@{/user/actor} + '/' + ${actor.id}" th:method="get">
-                                            <img th:src="${pathToImage}+${actor.picturePath}" th:height="200" th:width="200" alt="Poster Path"/>
+                                            <img th:src="${pathToImage}+${actor.picturePath}" th:height="100" th:width="100" alt="Poster Path"/>
                                         </a>
                                     </td>
                                     <td th:text="${actor.fullName}"/>
