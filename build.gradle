@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.2.RELEASE'
+		springBootVersion = '2.0.6.RELEASE'
 	}
 	repositories {
 		jcenter()
@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
@@ -21,6 +22,7 @@ apply from: 'gradle/swagger.gradle'
 group = 'ua.romankh3.movie.tracking'
 version = '1.0.1'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	jcenter()
@@ -41,7 +43,12 @@ dependencies {
 	compile 'org.apache.commons:commons-lang3:3.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
 
-	runtime 'org.hsqldb:hsqldb'
+	// https://mvnrepository.com/artifact/org.testcontainers/mysql
+	testCompile group: 'org.testcontainers', name: 'mysql', version: '1.9.1'
+
+	testCompile("junit:junit")
+
+	runtime 'mysql:mysql-connector-java'
 }
 
 defaultTasks << 'clean'

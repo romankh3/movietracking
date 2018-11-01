@@ -1,0 +1,13 @@
+.admin-message-text {
+    font-style: normal;
+    font-size: 22px;
+    color: #004080;
+}
+
+.table {
+    border-color: crimson;
+}
+
+.table-striped {
+    border-color: crimson;
+}
