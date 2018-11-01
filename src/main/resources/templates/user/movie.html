@@ -19,18 +19,24 @@
         </button>
     </form>
 
-    <div class="panel-group" style="margin-top:40px">
+    <div class="panel-group" style="margin-top:10px">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <img th:src="@{/images/logotype_wb.png}" class="img-responsive center-block"
-                     th:height="400" th:width="400" alt="Beer"/>
-            </div>
-            <p class="admin-message-text text-center" th:utext="${userMessage}"></p>
-            <div class="panel-body">
-
+                <table border="1" class="table table-striped">
+                    <tr>
+                        <td>
+                            <img th:src="${pathToImage}+${movie.posterPath}" class="img-responsive"
+                                 th:height="400" th:width="400" alt="Poster Path"/>
+                        </td>
+                        <td>
+                            <h2 th:text="${movie.title}">Movie Title</h2>
+                            <p th:text="${movie.overview}">Overview</p>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 

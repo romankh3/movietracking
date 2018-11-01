@@ -43,12 +43,11 @@ public class UserController {
 
     @RequestMapping(value = "/user/movie/{movie_id}", method = RequestMethod.GET)
     public ModelAndView movies(@PathVariable("movie_id") Integer movieId) {
-        User user = authenticationService.getAuthenticationUser();
         MovieTMDB movieTMDB = movieTmbdService.findById(movieId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("movie", movieTMDB);
-        modelAndView.addObject("newestMovies", "Explore Movies");
+        modelAndView.addObject("pathToImage", pathToImage);
         modelAndView.setViewName("/user/movie");
 
         return modelAndView;
