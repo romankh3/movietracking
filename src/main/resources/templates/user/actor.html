@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title> | The Movie TrackingAdmin Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Logout
+        </button>
+    </form>
+    <form th:action="@{/user/home}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Back
+        </button>
+    </form>
+
+    <div class="panel-group" style="margin-top:10px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <!--<table border="1" class="table table-striped">-->
+                    <!--<tr>-->
+                        <!--<td>-->
+                            <!--<img th:src="${pathToImage}+${movie.posterPath}" class="img-responsive"-->
+                                 <!--th:height="400" th:width="400" alt="Poster Path"/>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<h2 th:text="${movie.title}">Movie Title</h2>-->
+                            <!--<p th:text="${movie.overview}">Overview</p>-->
+                            <!--<table border="1" class="table table-striped">-->
+                                <!--<thead>-->
+                                <!--<tr>-->
+                                    <!--<th>Poster</th>-->
+                                    <!--<th>Name</th>-->
+                                    <!--<th>Set As favorite</th>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+                                <!--<tbody>-->
+                                <!--<tr th:each="actor: ${actors}">-->
+                                    <!--<td >-->
+                                        <!--<a th:href="@{/user/actor} + '/' + ${actor.id}" th:method="get">-->
+                                            <!--<img th:src="${pathToImage}+${actor.picturePath}" th:height="200" th:width="200" alt="Poster Path"/>-->
+                                        <!--</a>-->
+                                    <!--</td>-->
+                                    <!--<td th:text="${actor.fullName}"/>-->
+                                <!--</tbody>-->
+
+                            <!--</table>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

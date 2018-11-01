@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.romankh3.movietracking.model.Actor;
 import ua.romankh3.movietracking.model.User;
 import ua.romankh3.movietracking.service.AuthenticationService;
+import ua.romankh3.movietracking.tmdb.model.ActorTMDB;
 import ua.romankh3.movietracking.tmdb.model.MovieTMDB;
 import ua.romankh3.movietracking.tmdb.service.ActorTmdbService;
 import ua.romankh3.movietracking.tmdb.service.MovieTmbdService;
@@ -47,15 +48,33 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/movie/{movie_id}", method = RequestMethod.GET)
-    public ModelAndView movies(@PathVariable("movie_id") Integer movieId) {
+    public ModelAndView getMovie(@PathVariable("movie_id") Integer movieId) {
+        User user = authenticationService.getAuthenticationUser();
+
         MovieTMDB movieTMDB = movieTmbdService.findById(movieId);
         List<Actor> actors = actorTmdbService.findActorsByMovie(movieId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("movie", movieTMDB);
         modelAndView.addObject("pathToImage", pathToImage);
+        modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("actors", actors);
         modelAndView.setViewName("/user/movie");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/user/actor/{actor_id}", method = RequestMethod.GET)
+    public ModelAndView getActor(@PathVariable("actor_id") Integer actor_id) {
+        User user = authenticationService.getAuthenticationUser();
+
+        ActorTMDB actor = actorTmdbService.findByActorId(actor_id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("actor", actor);
+        modelAndView.addObject("pathToImage", pathToImage);
+        modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.setViewName("/user/actor");
 
         return modelAndView;
     }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.romankh3.movietracking.model.Actor;
 import ua.romankh3.movietracking.tmdb.model.ActorCastTMDB;
+import ua.romankh3.movietracking.tmdb.model.ActorTMDB;
 import ua.romankh3.movietracking.tmdb.service.ActorTmdbService;
 import ua.romankh3.movietracking.tmdb.service.TmdbAPIService;
 
@@ -27,6 +28,12 @@ public class ActorTmdbServiceImpl implements ActorTmdbService {
         String path = "/movie/" + movieUd + "/credits";
         List<ActorCastTMDB> castByMovie = tmdbAPIService.findCastByMovie(path);
         return castByMovie.stream().map(this::toActor).collect(Collectors.toList());
+    }
+
+    @Override
+    public ActorTMDB findByActorId(Integer actor_id) {
+        String path = "/person/" + actor_id;
+        return null;
     }
 
     private Actor toActor(ActorCastTMDB castTMDB) {
