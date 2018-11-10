@@ -43,7 +43,8 @@ dependencies {
 	compile 'org.apache.commons:commons-lang3:3.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
 
-	// https://mvnrepository.com/artifact/org.testcontainers/mysql
+	compileOnly 'org.projectlombok:lombok:1.18.4'
+
 	testCompile group: 'org.testcontainers', name: 'mysql', version: '1.9.1'
 
 	testCompile("junit:junit")
