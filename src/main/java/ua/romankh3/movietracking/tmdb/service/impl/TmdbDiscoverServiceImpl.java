@@ -10,9 +10,8 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ua.romankh3.movietracking.tmdb.model.ActorCastTMDB;
 import ua.romankh3.movietracking.tmdb.model.MovieTMDB;
-import ua.romankh3.movietracking.tmdb.service.TmdbAPIService;
+import ua.romankh3.movietracking.tmdb.service.TmdbDiscoverService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,10 +20,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static ua.romankh3.movietracking.tmdb.service.impl.TmdbAPIServiceImpl.TMDBConstants.*;
+import static ua.romankh3.movietracking.tmdb.service.impl.TmdbDiscoverServiceImpl.TMDBConstants.*;
 
 @Service
-public class TmdbAPIServiceImpl implements TmdbAPIService {
+public class TmdbDiscoverServiceImpl implements TmdbDiscoverService {
 
     @Value("${tmdb.v3.apikey}")
     private String tmdbApiKey;
@@ -35,30 +34,23 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
     @Value("${tmdb.api.base.url}")
     private String tmdbApiBaseUrl;
 
-
-
     @Override
-    public List<MovieTMDB> retrieveMovies() throws IOException {
-        return callToTMDB(DISCOVER_MOVIE, null, null, null);
-    }
-
-    @Override
-    public List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear) {
+    public List<MovieTMDB> discoverMovies(Integer primaryReleaseYear) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, null, null);
     }
 
     @Override
-    public List<MovieTMDB> retrieveMovies(List<Integer> favoriteActorIds) {
+    public List<MovieTMDB> discoverMovies(List<Integer> favoriteActorIds) {
         return callToTMDB(DISCOVER_MOVIE, null, null, favoriteActorIds);
     }
 
     @Override
-    public List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear, List<Integer> favoriteActorIds) {
+    public List<MovieTMDB> discoverMovies(Integer primaryReleaseYear, List<Integer> favoriteActorIds) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, null, favoriteActorIds);
     }
 
     @Override
-    public List<MovieTMDB> retrieveMovies(Integer primaryReleaseYear, Integer month, List<Integer> favoriteActorIds) {
+    public List<MovieTMDB> discoverMovies(Integer primaryReleaseYear, Integer month, List<Integer> favoriteActorIds) {
         return callToTMDB(DISCOVER_MOVIE, primaryReleaseYear, month, favoriteActorIds);
     }
 
@@ -83,38 +75,6 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
         }
         return null;
     }
-
-    public List<ActorCastTMDB> findCastByMovie(String path) {
-        try {
-            String url = createDefaultTmdbUrlBuiler(path);
-            HttpResponse<JsonNode> jsonResponse = Unirest.get(url).asJson();
-
-            if(jsonResponse.getStatus() != HttpStatus.SC_OK) {
-                return null;
-            }
-            String jsonList = jsonResponse.getBody().getObject().get("cast").toString();
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<ActorCastTMDB> actorTMDBS = objectMapper.readValue(jsonList, new TypeReference<List<ActorCastTMDB>>(){} );
-
-            return actorTMDBS;
-        } catch (UnirestException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private String createDefaultTmdbUrlBuiler(String path) {
-        try {
-            URIBuilder uriBuilder = new URIBuilder(tmdbApiBaseUrl + path);
-            uriBuilder.addParameter(LANGUAGE, tmdbLanguage);
-            uriBuilder.addParameter(API_KEY, tmdbApiKey);
-            return uriBuilder.build().toString();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 
     private String createTmdbUrl(String path,
                                  Integer primaryReleaseYear,
@@ -147,7 +107,7 @@ public class TmdbAPIServiceImpl implements TmdbAPIService {
         return stringJoiner.toString();
     }
 
-    static class TMDBConstants {
+    public static class TMDBConstants {
         public static final String API_KEY = "api_key";
         public static final String LANGUAGE = "language";
         public static final String NOW_PLAYING_MOVIE = "/movie/now_playing";

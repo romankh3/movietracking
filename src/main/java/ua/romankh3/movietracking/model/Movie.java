@@ -22,5 +22,4 @@ public class Movie {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actors = new ArrayList<>();
-
 }

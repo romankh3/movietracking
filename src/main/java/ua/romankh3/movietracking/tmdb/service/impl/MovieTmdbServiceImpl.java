@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static ua.romankh3.movietracking.tmdb.service.impl.TmdbAPIServiceImpl.TMDBConstants.*;
+import static ua.romankh3.movietracking.tmdb.service.impl.TmdbDiscoverServiceImpl.TMDBConstants.*;
 
 @Service
 public class MovieTmdbServiceImpl implements MovieTmbdService {
